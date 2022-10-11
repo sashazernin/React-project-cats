@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react-project-cats/static/css/main.ef556576.css",
-    "main.js": "/react-project-cats/static/js/main.2bb030f2.js",
-    "static/js/787.af996208.chunk.js": "/react-project-cats/static/js/787.af996208.chunk.js",
-    "static/media/logo.svg": "/react-project-cats/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
-    "index.html": "/react-project-cats/index.html",
-    "main.ef556576.css.map": "/react-project-cats/static/css/main.ef556576.css.map",
-    "main.2bb030f2.js.map": "/react-project-cats/static/js/main.2bb030f2.js.map",
-    "787.af996208.chunk.js.map": "/react-project-cats/static/js/787.af996208.chunk.js.map"
+    "main.css": "/React-project-cats/static/css/main.ef556576.css",
+    "main.js": "/React-project-cats/static/js/main.93bafd37.js",
+    "static/js/787.af996208.chunk.js": "/React-project-cats/static/js/787.af996208.chunk.js",
+    "static/media/logo.svg": "/React-project-cats/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/React-project-cats/index.html",
+    "main.ef556576.css.map": "/React-project-cats/static/css/main.ef556576.css.map",
+    "main.93bafd37.js.map": "/React-project-cats/static/js/main.93bafd37.js.map",
+    "787.af996208.chunk.js.map": "/React-project-cats/static/js/787.af996208.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ef556576.css",
-    "static/js/main.2bb030f2.js"
+    "static/js/main.93bafd37.js"
   ]
 }
