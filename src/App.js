@@ -1,25 +1,25 @@
 import logo from './logo.svg';
 import './App.css';
+import React from "react";
+import RandomCat from "./components/RandomCat/RandomCat";
+import {Route, Routes, BrowserRouter,Navigate} from "react-router-dom";
+import Header from "./components/Header/Header";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <div className="app-wrapper">
+                <div className='app-body'>
+                    <Header/>
+                    <Routes>
+                        <Route path='' element={<Navigate to='/RandomCat' />}/>
+                        <Route path='RandomCat' element={<RandomCat/>}/>
+                    </Routes>
+
+                </div>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;
