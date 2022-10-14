@@ -1,13 +1,23 @@
 .header {
+    z-index: 1;
     grid-area: h;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    max-height: 80px;
+}
+
+.headerBackground{
+    width: 100%;
+    height: 40px;
+    position: absolute;
 }
 
 .header img {
-    width: 60px;
+    padding-left: 10px;
+    width: 80px;
+    user-select: none;
+    pointer-events: none;
 }
 
 .loginBlock {
@@ -20,16 +30,25 @@
     padding: 20px;
     color: white;
     font-size: 20px;
-    background-color:black;
     height: min-content;
 }
 .Link{
+    font-weight: bold;
     text-decoration: none;
     color: white;
 }
 .active{
-    color: gold;
+    font-weight: bold;
+    text-decoration: none;
+    color: #0bd1d9;
+    text-shadow: 0px 0px 20px #09f4ff;
+    transition: .15s ease-in-out;
 }
 .item{
     margin: 0px 10px;
+}
+.Link {
+    text-decoration: none;
+    color: white;
+    transition: .15s ease-in-out;
 }

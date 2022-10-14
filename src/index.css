@@ -1,3 +1,6 @@
+body,html{
+  height: 100%;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,10 +8,24 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #464646;
+  background: url('./images/background.jpg') fixed;
+}
+
+.body-div{
+  height: 100%;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button{
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+button:hover{
+  cursor:pointer;
+  letter-spacing: 2px;
+  font-weight: bold;
 }

@@ -24,8 +24,8 @@
     max-height: 100%;
 }
 
-.newCatButton {
-    background: #363636;
+.likeItButton {
+    background: #079a2b;
     padding: 15px 30px;
     margin: 10px 20px;
     border-radius: 10px;
@@ -33,16 +33,35 @@
 }
 
 @media (any-hover: hover) {
-    .newCatButton:hover {
-        background: #4f4f4f;
+    .likeItButton:hover {
+        background: #058123;
     }
 }
 
-.newCatButton:active {
-    background: #777777;
+.likeItButton:active {
+    background: #03671f;
+}
+
+.dontLikeItButton {
+    background: #cc0b0b;
+    padding: 15px 30px;
+    margin: 10px 20px;
+    border-radius: 10px;
+    color: #ffffff;
+}
+
+@media (any-hover: hover) {
+    .dontLikeItButton:hover {
+        background: #ab0909;
+    }
+}
+
+.dontLikeItButton:active {
+    background: #940707;
 }
 
 @media (max-height: 600px) {
+
     .cat {
         min-height: 55vh;
         height: 55vh;
@@ -55,9 +74,31 @@
         height: 45vh;
     }
 
-    .newCatButton {
+    .dontLikeItButton {
         padding: 10px 15px;
         margin: 10px 10px;
+    }
+
+    .likeItButton {
+        padding: 10px 15px;
+        margin: 10px 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .dontLikeItButton {
+        padding: 10px 15px;
+        margin: 10px 10px;
+    }
+
+    .likeItButton {
+        padding: 10px 15px;
+        margin: 10px 10px;
+    }
+
+    .cat {
+        min-height: 45vh;
+        height: 45vh;
     }
 }
 
@@ -68,12 +109,10 @@
     bottom: 6px;
     position: absolute;
 }
-
 .favImage {
     padding: 5px;
     width: 30px;
 }
-
 @media (any-hover: hover) {
     .favImage:hover {
         cursor: pointer;

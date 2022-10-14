@@ -2,7 +2,7 @@
   "name": "cats-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://sashazernin.github.io/react-project-cats",
+  "homepage": "https://sashazernin.github.io/React-project-cats",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^5.16.5",

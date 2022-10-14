@@ -1,4 +1,5 @@
 import * as axios from "axios";
+import header from "./components/Header/Header";
 
 const instance = axios.default.create({
     baseURL: 'https://api.thecatapi.com/v1/',
@@ -7,6 +8,21 @@ const instance = axios.default.create({
     }
 })
 
+export const voteApi = {
+    createAVote(data){
+        return instance.post('votes',data)
+    }
+}
+
 export const getRandomCatImage = () => {
     return instance.get(`images/search`)
+}
+
+export const favoriteApi = {
+    createAFavorite(data){
+        return instance.post('favourites',data)
+    },
+    deleteFromFavorite(data){
+        return instance.delete(`favourites/${data}`)
+    }
 }

@@ -1,24 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 import React from "react";
 import RandomCat from "./components/RandomCat/RandomCat";
-import {Route, Routes, BrowserRouter,Navigate} from "react-router-dom";
+import {Route, Routes, BrowserRouter, Navigate, HashRouter} from "react-router-dom";
 import Header from "./components/Header/Header";
+import Vote from "./components/Vote/Vote";
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="app-wrapper">
+                <div className='wrapper' ></div>
                 <div className='app-body'>
                     <Header/>
                     <Routes>
                         <Route path='' element={<Navigate to='/RandomCat' />}/>
                         <Route path='RandomCat' element={<RandomCat/>}/>
+                        <Route path='Vote' element={
+                            <Vote/>
+                        }/>
                     </Routes>
 
                 </div>
             </div>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
