@@ -13,12 +13,11 @@ const RandomCat = () => {
     const catImage = useSelector(state => state.randomCat.catUrl)
     const catId = useSelector(state => state.randomCat.id)
 
-
     useEffect(() => {
         async function startFetching() {
             await dispatch(getRandomCat())
         }
-
+        console.log('as')
         if (!catImage) {
             startFetching();
         }

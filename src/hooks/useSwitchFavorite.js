@@ -1,10 +1,7 @@
-import {useState} from "react";
-import heart from "../images/Heart.png";
-import heartActive from "../images/HeartActive.png";
 import {useDispatch, useSelector} from "react-redux";
 import {favoriteApi} from "../Api";
 
-function useSwitchFavorite(catId,favoriteId,setFavoriteId) {
+function useSwitchFavorite(catId, favoriteId, setFavoriteId) {
     const userId = useSelector(state => state.user.id)
     const dispatch = useDispatch()
 
@@ -15,12 +12,14 @@ function useSwitchFavorite(catId,favoriteId,setFavoriteId) {
                 'sub_id': userId
             })
             if (resp.data.message === "SUCCESS") {
-                dispatch(setFavoriteId(resp.data.id))
+                if (!!setFavoriteId) {
+                    dispatch(setFavoriteId(resp.data.id))
+                }
             } else {
                 alert('some Error')
             }
-        } catch {
-            alert('some Error')
+        } catch(error) {
+            alert(error)
         }
     }
 
@@ -28,12 +27,14 @@ function useSwitchFavorite(catId,favoriteId,setFavoriteId) {
         try {
             const resp = await favoriteApi.deleteFromFavorite(favoriteId)
             if (resp.data.message === "SUCCESS") {
-                dispatch(setFavoriteId(null))
+                if (!!setFavoriteId) {
+                    dispatch(setFavoriteId(null))
+                }
             } else {
                 alert('some Error')
             }
-        } catch {
-            alert('some Error')
+        } catch(error) {
+            alert(error)
         }
     }
 

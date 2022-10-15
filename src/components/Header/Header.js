@@ -16,6 +16,9 @@ const Header = (props) => {
                     <div className={c.item}>
                         <NavLink className={isActive} to="/Vote">Vote</NavLink>
                     </div>
+                    <div className={c.item}>
+                        <NavLink className={isActive} to="/Favorites">Favorites</NavLink>
+                    </div>
                 </nav>
         </header>
     )

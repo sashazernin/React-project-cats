@@ -22,7 +22,10 @@ export const favoriteApi = {
     createAFavorite(data){
         return instance.post('favourites',data)
     },
-    deleteFromFavorite(data){
-        return instance.delete(`favourites/${data}`)
+    deleteFromFavorite(favoriteId){
+        return instance.delete(`favourites/${favoriteId}`)
+    },
+    getAllFavorites(user){
+        return instance.get(`favourites?sub_id=${user}`)
     }
 }

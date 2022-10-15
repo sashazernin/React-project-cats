@@ -1,0 +1,13 @@
+.body {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: start;
+}
+.item{
+    border: none;
+    padding: 5px;
+    height: 150px;
+    width: 150px;
+}

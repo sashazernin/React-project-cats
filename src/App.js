@@ -4,6 +4,7 @@ import RandomCat from "./components/RandomCat/RandomCat";
 import {Route, Routes, BrowserRouter, Navigate, HashRouter} from "react-router-dom";
 import Header from "./components/Header/Header";
 import Vote from "./components/Vote/Vote";
+import Favorites from "./components/Favorites/Favorites";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Routes>
                         <Route path='' element={<Navigate to='/RandomCat' />}/>
                         <Route path='RandomCat' element={<RandomCat/>}/>
+                        <Route path='Favorites' element={<Favorites/>}/>
                         <Route path='Vote' element={
                             <Vote/>
                         }/>
