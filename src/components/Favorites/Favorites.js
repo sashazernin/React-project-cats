@@ -14,7 +14,6 @@ const Favorites = () => {
 
     useEffect(() => {
         async function startFetching() {
-
             await dispatch(getFavorites(userId))
         }
 

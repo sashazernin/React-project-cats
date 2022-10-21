@@ -15,7 +15,7 @@ export const getRandomCat = createAsyncThunk('randomCat/getRandomCat',
     }
 )
 
-export const randomCatSlice = createSlice({
+const randomCatSlice = createSlice({
     name: "randomCat",
     initialState,
     reducers: {

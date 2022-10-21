@@ -1,0 +1,27 @@
+.tableBody{
+    display: flex;
+    table-layout: fixed;
+}
+.table {
+    height: 100%;
+    padding: 20px;
+    table-layout: fixed;
+}
+.headerText{
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+.item{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #525252;
+    width: 100%;
+}
+.itemImage{
+    object-fit: cover;
+    height: 80px;
+    width: 80px;
+}

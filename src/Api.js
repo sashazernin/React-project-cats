@@ -11,11 +11,18 @@ const instance = axios.default.create({
 export const voteApi = {
     createAVote(data){
         return instance.post('votes',data)
+    },
+    getAllVotes(user){
+        return instance.get(`votes?sub_id=${user}`)
+    },
+    DeleteFromVote(voteId){
+        return instance.delete(`votes/${voteId}`)
     }
 }
 
 export const getRandomCatImage = () => {
-    return instance.get(`images/search`)
+    console.warn('use the imagesAPI.getRandomCatImage()')
+    return imagesAPI.getRandomCatImage()
 }
 
 export const favoriteApi = {
@@ -25,7 +32,22 @@ export const favoriteApi = {
     deleteFromFavorite(favoriteId){
         return instance.delete(`favourites/${favoriteId}`)
     },
-    getAllFavorites(user){
-        return instance.get(`favourites?sub_id=${user}`)
+    getAllFavorites(userId){
+        return instance.get(`favourites?sub_id=${userId}`)
+    }
+}
+
+export const breedsApi = {
+    getBreedsList(){
+        return instance.get('breeds')
+    }
+}
+
+export const imagesAPI = {
+    getCatImageByBreed(data){
+        return instance.get(`images/search?limit=100&breed_id=${data.breed_id}&sub_id=${data.userId}`)
+    },
+    getRandomCatImage(){
+        return instance.get(`images/search`)
     }
 }

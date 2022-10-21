@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { getRandomCat} from "../../features/RandomCat/RandomCatSlice";
+import {getRandomCat} from "../../features/RandomCat/RandomCatSlice";
 import c from './RandomCat.module.css'
 import heart from "../../images/Heart.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
@@ -17,21 +17,23 @@ const RandomCat = () => {
         async function startFetching() {
             await dispatch(getRandomCat())
         }
-        console.log('as')
+
         if (!catImage) {
             startFetching();
         }
     }, [!catImage]);
 
     const favoriteId = useSelector(state => state.randomCat.favoriteId)
-    const [switchFavorite] = useSwitchFavorite(catId,favoriteId,setFavoriteId)
+    const [switchFavorite] = useSwitchFavorite(catId, favoriteId, setFavoriteId)
 
     return (
         <div className={c.body}>
             <div className={c.cat}>
                 <img className={c.catImage} src={catImage}/>
                 <button className={c.favButton}>
-                    <img className={c.favImage} src={!favoriteId ? heart : heartActive} onClick={()=>{switchFavorite()}}/>
+                    <img className={c.favImage} src={!favoriteId ? heart : heartActive} onClick={() => {
+                        switchFavorite()
+                    }}/>
                 </button>
             </div>
             <div>

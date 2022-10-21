@@ -10,7 +10,6 @@ export const getFavorites = createAsyncThunk('favorites/getFavorites',
     async (data, {dispatch}) => {
         try {
             const resp = await favoriteApi.getAllFavorites(data)
-            console.log(resp.data)
             dispatch(setFavorites(resp.data))
         } catch {
             alert('some error')
@@ -18,7 +17,7 @@ export const getFavorites = createAsyncThunk('favorites/getFavorites',
     }
 )
 
-export const favoritesSlice = createSlice({
+const favoritesSlice = createSlice({
     name: 'favorites',
     initialState,
     reducers: {

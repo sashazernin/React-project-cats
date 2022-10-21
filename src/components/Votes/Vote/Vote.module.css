@@ -1,0 +1,20 @@
+.item{
+    background: #525252;
+}
+.itemImage{
+    object-fit: cover;
+    height: 80px;
+    width: 100%;
+}
+.likeText{
+    color: greenyellow;
+}
+.dislikeText{
+    color: red;
+}
+.idText{
+    color: white;
+}
+.deleteButton{
+
+}

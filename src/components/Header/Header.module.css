@@ -6,14 +6,18 @@
     align-items: center;
     max-height: 80px;
 }
-
 .headerBackground{
-    width: 100%;
-    height: 40px;
     position: absolute;
+    z-index: -1;
+    background: #212121;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
 }
 
-.header img {
+.logo {
     padding-left: 10px;
     width: 80px;
     user-select: none;
@@ -24,31 +28,69 @@
     margin-right: 20px;
     color: white;
 }
-.Content{
+.content{
+    z-index: 1;
     display: flex;
     user-select: none;
     padding: 20px;
-    color: white;
     font-size: 20px;
     height: min-content;
 }
-.Link{
-    font-weight: bold;
-    text-decoration: none;
-    color: white;
+.contentMini{
+    z-index: -100;
+    display: none;
+    flex-direction: column;
+    user-select: none;
+    font-size: 20px;
+    top: 80px;
+    right: 0;
+    position: absolute;
+    background: #212121;
 }
-.active{
+.activeLink{
+    padding: 5px 10px;
     font-weight: bold;
     text-decoration: none;
     color: #0bd1d9;
     text-shadow: 0px 0px 20px #09f4ff;
-    transition: .15s ease-in-out;
 }
-.item{
-    margin: 0px 10px;
-}
-.Link {
+.link {
+    padding: 5px 10px;
+    font-weight: bold;
     text-decoration: none;
     color: white;
-    transition: .15s ease-in-out;
+
+}
+@media (any-hover) {
+    .activeLink:hover{
+        background: black;
+    }
+    .link:hover{
+        background: black;
+    }
+}
+.menuIcon{
+    user-select: none;
+
+    cursor: pointer;
+    visibility: hidden;
+    right: 10px;
+    position: absolute;
+}
+.menuIconImage{
+    pointer-events: none;
+    width: 50px;
+}
+@media (max-width: 800px) {
+    .menuIcon{
+        visibility: visible;
+    }
+    .contentMini{
+        display: flex;
+    }
+    .content{
+        visibility: hidden;
+        position: absolute;
+        flex-direction: column;
+    }
 }

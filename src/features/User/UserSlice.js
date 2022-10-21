@@ -1,10 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-    id: 'user'
+    id: 'Developer'
 }
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
     name: "randomCat",
     initialState,
     reducers: {

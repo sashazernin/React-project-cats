@@ -30,7 +30,7 @@ export const createVote = createAsyncThunk('vote/getRandomCat',
     }
 )
 
-export const voteSlice = createSlice({
+const voteSlice = createSlice({
     name: "vote",
     initialState,
     reducers: {
