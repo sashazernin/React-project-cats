@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/React-project-cats/static/css/main.716c7ba2.css",
-    "main.js": "/React-project-cats/static/js/main.4ab66265.js",
+    "main.css": "/React-project-cats/static/css/main.c41a9194.css",
+    "main.js": "/React-project-cats/static/js/main.5cd92aaa.js",
     "static/js/787.af996208.chunk.js": "/React-project-cats/static/js/787.af996208.chunk.js",
     "static/media/Preloader.gif": "/React-project-cats/static/media/Preloader.15db3cd0578df8c918e9.gif",
     "static/media/background.jpg": "/React-project-cats/static/media/background.d41d28722a34e1c0e817.jpg",
+    "static/media/menuIcon.png": "/React-project-cats/static/media/menuIcon.7f17c3d984046568fef8.png",
     "static/media/HeartActive.png": "/React-project-cats/static/media/HeartActive.d11dbc10b219f4af1d6d.png",
     "static/media/Heart.png": "/React-project-cats/static/media/Heart.fb52f1a0edee7f86de21.png",
     "index.html": "/React-project-cats/index.html",
-    "main.716c7ba2.css.map": "/React-project-cats/static/css/main.716c7ba2.css.map",
-    "main.4ab66265.js.map": "/React-project-cats/static/js/main.4ab66265.js.map",
+    "main.c41a9194.css.map": "/React-project-cats/static/css/main.c41a9194.css.map",
+    "main.5cd92aaa.js.map": "/React-project-cats/static/js/main.5cd92aaa.js.map",
     "787.af996208.chunk.js.map": "/React-project-cats/static/js/787.af996208.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.716c7ba2.css",
-    "static/js/main.4ab66265.js"
+    "static/css/main.c41a9194.css",
+    "static/js/main.5cd92aaa.js"
   ]
 }
