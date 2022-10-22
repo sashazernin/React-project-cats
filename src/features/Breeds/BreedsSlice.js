@@ -3,8 +3,8 @@ import {breedsApi, imagesAPI} from "../../Api";
 
 
 const initialState = {
-    allBreedsImages: {},
-    breedsList:{}
+    allBreedsImages: null,
+    breedsList:null
 }
 
 export const getByBreeds = createAsyncThunk('breeds/getByBreeds',

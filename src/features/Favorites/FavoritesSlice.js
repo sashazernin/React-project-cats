@@ -3,13 +3,14 @@ import {favoriteApi} from "../../Api";
 
 
 const initialState = {
-    allFavorites: {}
+    allFavorites: null
 }
 
 export const getFavorites = createAsyncThunk('favorites/getFavorites',
     async (data, {dispatch}) => {
         try {
             const resp = await favoriteApi.getAllFavorites(data)
+            console.log(resp.data)
             dispatch(setFavorites(resp.data))
         } catch {
             alert('some error')

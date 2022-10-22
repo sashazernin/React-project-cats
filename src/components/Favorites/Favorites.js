@@ -1,32 +1,30 @@
 import React from "react";
 import c from './Favorites.module.css'
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {getFavorites} from "../../features/Favorites/FavoritesSlice";
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import Favorite from "./Favorite/Favorite";
+import {useInitializePage} from "../../hooks/useInitializePage";
 
 const Favorites = () => {
-
-    const dispatch = useDispatch()
     const favorites = useSelector(state => state.favorites.allFavorites)
     const userId = useSelector(state => state.user.id)
 
-    useEffect(() => {
-        async function startFetching() {
-            await dispatch(getFavorites(userId))
-        }
+    useInitializePage(!favorites, getFavorites, userId)
 
-        if (Object.entries(favorites).length === 0) {
-            startFetching();
-        }
-    }, [!favorites]);
-
-    const favoriteId = useSelector(state => state.randomCat.favoriteId)
+    if (!favorites) {
+        return (
+            <Preloader/>
+        )
+    }
 
     if (Object.entries(favorites).length === 0) {
         return (
-            <Preloader/>
+            <div className={c.bodyNullMessage}>
+                <span className={c.nullMessage}>
+                    No favorites
+                </span>
+            </div>
         )
     }
 

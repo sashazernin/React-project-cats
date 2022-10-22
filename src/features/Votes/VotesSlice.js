@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {voteApi} from "../../Api";
 
 const initialState = {
-    allVotes: {}
+    allVotes: null
 }
 
 export const getAllVotes = createAsyncThunk('getAllVotes/VotesSlice',
@@ -15,8 +15,9 @@ export const getAllVotes = createAsyncThunk('getAllVotes/VotesSlice',
 export const deleteFromVote = createAsyncThunk('deleteFromVote/VotesSlice',
     async (data, {dispatch}) => {
         try {
-            const resp = await voteApi.DeleteFromVote(data)
             dispatch(deleteVote(data))
+            const resp = await voteApi.DeleteFromVote(data)
+
         }catch (error){
             alert(error)
         }

@@ -14,18 +14,18 @@ export const getRandomCat = createAsyncThunk('vote/getRandomCat',
     }
 )
 
-export const createVote = createAsyncThunk('vote/getRandomCat',
+export const createVote = createAsyncThunk('vote/createVote',
     async (data, {dispatch}) => {
         try {
             const resp = await voteApi.createAVote(data)
             if (resp.data.message === "SUCCESS") {
-                dispatch(getRandomCat())
+                await dispatch(getRandomCat())
                 dispatch(setFavoriteId(null))
             } else {
-                alert("vote error2")
+                alert("vote error")
             }
         } catch (error) {
-            alert("vote error1")
+            alert(error)
         }
     }
 )

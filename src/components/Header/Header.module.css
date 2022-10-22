@@ -78,7 +78,8 @@
     position: absolute;
 }
 .menuIconImage{
-    pointer-events: none;
+    pointer-events: none
+;
     width: 50px;
 }
 @media (max-width: 800px) {

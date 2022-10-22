@@ -33,7 +33,7 @@ const Header = () => {
                 <Link path={'Votes'} name={'Votes'}/>
                 <Link path={'Favorites'} name={'Favorites'}/>
                 <Link path={'Breeds'} name={'Breeds'}/>
-                <Link path={'FindImage'} name={'FindImage'}/>
+                <Link path={'FindImage'} name={'Find image'}/>
                 <Link path={'About'} name={'About'}/>
             </nav>
             <nav style={{visibility: menuOpened ? 'visible' : 'hidden'}} className={c.contentMini}>

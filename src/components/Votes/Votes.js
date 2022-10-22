@@ -1,27 +1,26 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {getAllVotes} from "../../features/Votes/VotesSlice";
-import Preloader from "../Preloader/Preloader";
+import Preloader from "../common/Preloader/Preloader";
 import c from "./Votes.module.css";
-import Favorite from "../Favorites/Favorite/Favorite";
 import Vote from "./Vote/Vote";
+import {useInitializePage} from "../../hooks/useInitializePage";
 
 const Votes = () => {
     const votes = useSelector(state => state.votes.allVotes)
-    const dispatch = useDispatch()
     const userId = useSelector(state => state.user.id)
-    useEffect(() => {
-        async function startFetching() {
-            await dispatch(getAllVotes(userId))
-        }
 
-        if (Object.entries(votes).length === 0) {
-            startFetching();
-        }
-    }, [!votes])
-    if (Object.entries(votes).length === 0) {
+    useInitializePage(!votes,getAllVotes,userId)
+
+    if (!votes) {
         return (
             <Preloader/>
+        )
+    }
+    if(Object.entries(votes).length === 0){
+        return(
+            <div>
+                no
+            </div>
         )
     }
     return (
