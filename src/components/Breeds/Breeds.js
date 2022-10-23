@@ -2,7 +2,7 @@ import React from "react";
 import c from './Breeds.module.css'
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getBreedsList, getByBreeds, setBreeds} from "../../features/Breeds/BreedsSlice";
+import {getBreedsList, getByBreeds, setBreeds} from "../../slices/BreedsSlice";
 import Preloader from "../common/Preloader/Preloader";
 import Breed from "./Breed/Breed";
 import {useInitializePage} from "../../hooks/useInitializePage";

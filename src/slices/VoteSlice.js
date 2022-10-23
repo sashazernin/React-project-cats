@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getRandomCatImage, voteApi} from "../../Api";
+import {getRandomCatImage, voteApi} from "../Api";
 
 const initialState = {
     image_id: null,

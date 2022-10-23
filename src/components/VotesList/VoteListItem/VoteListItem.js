@@ -1,8 +1,8 @@
-import c from "./Vote.module.css";
-import {deleteFromVote} from "../../../features/Votes/VotesSlice";
+import c from "./VoteListItem.module.css";
+import {deleteFromVote} from "../../../slices/VotesListSlice";
 import {useDispatch} from "react-redux";
 
-const Votes = (props) => {
+const VoteListItem = (props) => {
     const dispatch = useDispatch()
     return (
         <tr className={c.item}>
@@ -25,4 +25,4 @@ const Votes = (props) => {
     )
 }
 
-export default Votes
+export default VoteListItem

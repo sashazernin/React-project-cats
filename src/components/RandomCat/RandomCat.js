@@ -1,9 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {getRandomCat} from "../../features/RandomCat/RandomCatSlice";
+import {getRandomCat,setFavoriteId} from "../../slices/RandomCatSlice";
 import c from './RandomCat.module.css'
 import heart from "../../images/Heart.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
-import {setFavoriteId} from "../../features/RandomCat/RandomCatSlice";
 import heartActive from "../../images/HeartActive.png";
 import {useInitializePage} from "../../hooks/useInitializePage";
 

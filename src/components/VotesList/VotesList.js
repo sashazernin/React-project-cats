@@ -1,11 +1,11 @@
 import {useSelector} from "react-redux";
-import {getAllVotes} from "../../features/Votes/VotesSlice";
+import {getAllVotes} from "../../slices/VotesListSlice";
 import Preloader from "../common/Preloader/Preloader";
-import c from "./Votes.module.css";
-import Vote from "./Vote/Vote";
+import c from "./VotesList.module.css";
 import {useInitializePage} from "../../hooks/useInitializePage";
+import VoteListItem from "./VoteListItem/VoteListItem";
 
-const Votes = () => {
+const VotesList = () => {
     const votes = useSelector(state => state.votes.allVotes)
     const userId = useSelector(state => state.user.id)
 
@@ -35,11 +35,11 @@ const Votes = () => {
                 </thead>
                 <tbody>
                 {votes.map(f =>
-                    <Vote key={f.id} value={f.value} imageUrl={f.image.url} id={f.id}/>
+                    <VoteListItem key={f.id} value={f.value} imageUrl={f.image.url} id={f.id}/>
                 )}
                 </tbody>
             </table>
     )
 }
 
-export default Votes
+export default VotesList

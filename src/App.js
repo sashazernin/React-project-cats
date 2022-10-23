@@ -5,8 +5,8 @@ import {Route, Routes, Navigate, HashRouter} from "react-router-dom";
 import Header from "./components/Header/Header";
 import Vote from "./components/Vote/Vote";
 import Favorites from "./components/Favorites/Favorites";
-import Votes from "./components/Votes/Votes";
 import Breeds from "./components/Breeds/Breeds";
+import VotesList from "./components/VotesList/VotesList";
 
 function App() {
     return (
@@ -19,7 +19,7 @@ function App() {
                         <Route path='' element={<Navigate to='/RandomCat'/>}/>
                         <Route path='RandomCat' element={<RandomCat/>}/>
                         <Route path='Favorites' element={<Favorites/>}/>
-                        <Route path='Votes' element={<Votes/>}/>
+                        <Route path='Votes' element={<VotesList/>}/>
                         <Route path='Vote' element={
                             <Vote/>
                         }/>

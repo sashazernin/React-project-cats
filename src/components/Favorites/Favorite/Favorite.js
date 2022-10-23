@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import c from './Favorite.module.css'
 import {useSwitchFavorite} from "../../../hooks/useSwitchFavorite";
-import {deleteFromFavorite} from "../../../features/Favorites/FavoritesSlice";
+import {deleteFromFavorite} from "../../../slices/FavoritesSlice";
 import {useDispatch} from "react-redux";
 
 const Favorite = (props) => {

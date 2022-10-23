@@ -2,7 +2,7 @@ import React from "react";
 import c from './FindImages.module.css'
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getBreedsList, getByBreeds} from "../../features/Breeds/BreedsSlice";
+import {getBreedsList, getByBreeds} from "../../slices/BreedsSlice";
 import Preloader from "../common/Preloader/Preloader";
 import Image from "./Image/Image";
 

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {voteApi} from "../../Api";
+import {voteApi} from "../Api";
 
 const initialState = {
     allVotes: null
@@ -24,7 +24,7 @@ export const deleteFromVote = createAsyncThunk('deleteFromVote/VotesSlice',
     }
 )
 
-const votesSlice = createSlice({
+const votesListSlice = createSlice({
     name: 'votes',
     initialState,
     reducers: {
@@ -37,5 +37,5 @@ const votesSlice = createSlice({
     }
 })
 
-export const {setVotes,deleteVote} = votesSlice.actions
-export default votesSlice.reducer
+export const {setVotes,deleteVote} = votesListSlice.actions
+export default votesListSlice.reducer

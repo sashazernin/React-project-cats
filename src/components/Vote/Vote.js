@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import c from './Vote.module.css'
-import {getRandomCat, createVote, setFavoriteId} from "../../features/Vote/VoteSlice";
+import {getRandomCat, createVote, setFavoriteId} from "../../slices/VoteSlice";
 import heart from "../../images/Heart.png"
 import heartActive from "../../images/HeartActive.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";

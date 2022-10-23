@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import c from './Image.module.css'
 import {useSwitchFavorite} from "../../../hooks/useSwitchFavorite";
-import {deleteFromFavorite} from "../../../features/Favorites/FavoritesSlice";
+import {deleteFromFavorite} from "../../../Slices/FavoritesSlice";
 import {useDispatch} from "react-redux";
 
 const Breed = (props) => {

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {favoriteApi} from "../../Api";
+import {favoriteApi} from "../Api";
 
 
 const initialState = {
@@ -10,7 +10,6 @@ export const getFavorites = createAsyncThunk('favorites/getFavorites',
     async (data, {dispatch}) => {
         try {
             const resp = await favoriteApi.getAllFavorites(data)
-            console.log(resp.data)
             dispatch(setFavorites(resp.data))
         } catch {
             alert('some error')

@@ -1,5 +1,5 @@
 import c from './Header.module.css';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 import menuIcon from '../../images/menuIcon.png'
 import {useOutsideClick} from "../../hooks/useOutsideClick";

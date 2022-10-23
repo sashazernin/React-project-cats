@@ -1,10 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit'
-import randomCatSlice from "../features/RandomCat/RandomCatSlice";
-import voteSlice from "../features/Vote/VoteSlice";
-import userSlice from "../features/User/UserSlice";
-import favoritesSlice from "../features/Favorites/FavoritesSlice";
-import votesSlice from "../features/Votes/VotesSlice";
-import breedsSlice from "../features/Breeds/BreedsSlice";
+import randomCatSlice from "../slices/RandomCatSlice";
+import voteSlice from "../slices/VoteSlice";
+import userSlice from "../slices/UserSlice";
+import favoritesSlice from "../slices/FavoritesSlice";
+import votesListSlice from "../slices/VotesListSlice";
+import breedsSlice from "../slices/BreedsSlice";
 
 export const store = configureStore({
     reducer:{
@@ -12,7 +12,7 @@ export const store = configureStore({
         vote:voteSlice,
         user:userSlice,
         favorites:favoritesSlice,
-        votes: votesSlice,
+        votes: votesListSlice,
         breeds: breedsSlice
     }
 })
