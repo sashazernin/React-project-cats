@@ -1,0 +1,90 @@
+.body{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cancelPopup{
+    border: none;
+    position: absolute;
+    background: rgba(255, 255, 255, 0);
+    width: 30px;
+    height: 30px;
+    top: 20px;
+    right: 20px;
+}
+.cancelPopup:after{
+    content: '';
+    background: white;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    transform: rotate(45deg);
+}
+.cancelPopup:before{
+      content: '';
+      background: white;
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      left: 0;
+      transform: rotate(-45deg);
+}
+.container{
+    padding: 40px 20px 20px;
+    width: 60%;
+    height: 80%;
+    background: #3b3b3b;
+}
+.image{
+    width: 100%;
+    height: 90%;
+    object-fit: contain;
+    background: black;
+}
+.controlPanel{
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.favButton {
+    padding: 0;
+    display: flex;
+    border: none;
+    background: rgba(0, 0, 0, 0);
+}
+.favImage:active {
+    width: 33px;
+
+}
+
+.favImage {
+    padding: 5px;
+    width: 30px;
+}
+@media (any-hover) {
+    .favButton:hover{
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .cancelPopup:hover{
+        background: rgba(255, 255, 255, 0.26);
+    }
+}
+@media (max-width: 500px){
+    .container{
+        height: 60%;
+    }
+}
+@media (max-width: 380px){
+    .container{
+        height: 45%;
+    }
+}

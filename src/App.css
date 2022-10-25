@@ -1,8 +1,15 @@
+.appBody{
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  height: 100%;
+}
 .appContainer{
+
   width: 1200px;
   background: rgba(75, 75, 75, 0.8);
 }
-.app-body{
+.appContent{
   display: grid;
   grid-template-areas:
   "h"

@@ -1,5 +1,5 @@
 import c from "./VoteListItem.module.css";
-import {deleteFromVote} from "../../../slices/VotesListSlice";
+import {deleteFromVote} from "../../../slices/VoteSlice";
 import {useDispatch} from "react-redux";
 
 const VoteListItem = (props) => {

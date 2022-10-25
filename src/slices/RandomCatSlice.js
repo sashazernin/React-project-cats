@@ -11,7 +11,6 @@ export const getRandomCat = createAsyncThunk('randomCat/getRandomCat',
     async (_, {dispatch}) => {
         const resp = await getRandomCatImage()
         dispatch(setCat(resp.data['0']))
-        dispatch(setFavoriteId(null))
     }
 )
 
@@ -29,5 +28,5 @@ const randomCatSlice = createSlice({
     },
 })
 
-export const {setCat,setFavoriteId} = randomCatSlice.actions
+export const {setCat, setFavoriteId} = randomCatSlice.actions
 export default randomCatSlice.reducer

@@ -11,8 +11,8 @@ export const getFavorites = createAsyncThunk('favorites/getFavorites',
         try {
             const resp = await favoriteApi.getAllFavorites(data)
             dispatch(setFavorites(resp.data))
-        } catch {
-            alert('some error')
+        } catch(error) {
+            alert(error)
         }
     }
 )
@@ -26,6 +26,9 @@ const favoritesSlice = createSlice({
         },
         deleteFromFavorite: (state,action) => {
             state.allFavorites = state.allFavorites.filter(favorite => favorite.id !== action.payload)
+        },
+        addToFavorite: (state,action) => {
+            state.allFavorites.push(action.payload)
         }
     }
 })

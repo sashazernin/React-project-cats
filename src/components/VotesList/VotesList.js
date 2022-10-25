@@ -1,12 +1,13 @@
 import {useSelector} from "react-redux";
-import {getAllVotes} from "../../slices/VotesListSlice";
+import {getAllVotes} from "../../slices/VoteSlice";
 import Preloader from "../common/Preloader/Preloader";
 import c from "./VotesList.module.css";
 import {useInitializePage} from "../../hooks/useInitializePage";
 import VoteListItem from "./VoteListItem/VoteListItem";
+import React from "react";
 
 const VotesList = () => {
-    const votes = useSelector(state => state.votes.allVotes)
+    const votes = useSelector(state => state.vote.allVotes)
     const userId = useSelector(state => state.user.id)
 
     useInitializePage(!votes,getAllVotes,userId)
@@ -18,8 +19,10 @@ const VotesList = () => {
     }
     if(Object.entries(votes).length === 0){
         return(
-            <div>
-                no
+            <div className={c.bodyNullMessage}>
+                <span className={c.nullMessage}>
+                    No votes
+                </span>
             </div>
         )
     }
@@ -34,7 +37,7 @@ const VotesList = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {votes.map(f =>
+                {[...votes].reverse().map(f =>
                     <VoteListItem key={f.id} value={f.value} imageUrl={f.image.url} id={f.id}/>
                 )}
                 </tbody>

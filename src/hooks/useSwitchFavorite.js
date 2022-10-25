@@ -1,38 +1,42 @@
 import {useDispatch, useSelector} from "react-redux";
 import {favoriteApi} from "../Api";
 import {useState} from "react";
+import {getFavorites} from "../slices/FavoritesSlice";
 
-function useSwitchFavorite(catId, favoriteId, setFavoriteId) {
+function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId) {
     const userId = useSelector(state => state.user.id)
     const dispatch = useDispatch()
     const [inProcess, setInProcess] = useState(false)
     const addToFavorite = async () => {
         try {
             const resp = await favoriteApi.createAFavorite({
-                'image_id': catId,
+                'image_id': imageId,
                 'sub_id': userId
             })
             if (resp.data.message === "SUCCESS") {
-                setInProcess(false)
+                dispatch(getFavorites(userId))
                 if (!!setFavoriteId) {
-                    dispatch(setFavoriteId(resp.data.id))
+                    setFavoriteId(resp.data.id)
                 }
+                setInProcess(false)
             } else {
                 alert('some Error')
             }
         } catch (error) {
             alert(error)
         }
+        return null
     }
 
     const deleteFromFavorite = async () => {
         try {
             const resp = await favoriteApi.deleteFromFavorite(favoriteId)
             if (resp.data.message === "SUCCESS") {
-                setInProcess(false)
                 if (!!setFavoriteId) {
-                    dispatch(setFavoriteId(null))
+                    dispatch(getFavorites(userId))
+                    setFavoriteId(null)
                 }
+                setInProcess(false)
             } else {
                 alert('some Error')
             }
@@ -44,7 +48,7 @@ function useSwitchFavorite(catId, favoriteId, setFavoriteId) {
     function switchFavorite() {
         if (!inProcess) {
             setInProcess(true)
-            if (!favoriteId) {
+            if (!isFavorite) {
                 addToFavorite()
             } else {
                 deleteFromFavorite()

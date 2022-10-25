@@ -25,3 +25,13 @@
     height: 80px;
     width: 80px;
 }
+.bodyNullMessage{
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+.nullMessage{
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+}

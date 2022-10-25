@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 
-function useOutsideClick(opened, close){
+function useOutsideClick(isOpened, close){
     const ref = useRef(null)
 
     const handleClick = (e) => {
@@ -10,13 +10,13 @@ function useOutsideClick(opened, close){
     }
 
     useEffect(() => {
-        if(opened){
+        if(isOpened){
             document.addEventListener('click', handleClick)
             return () => {
                 document.removeEventListener('click', handleClick)
             }
         }
-    },[opened])
+    },[isOpened])
 
     return [ref]
 }
