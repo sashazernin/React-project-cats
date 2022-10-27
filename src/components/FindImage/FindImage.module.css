@@ -4,8 +4,31 @@
     flex-direction: column;
     justify-content: center;
 }
+.selectorsContainer{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+}
+
+.selectorBody{
+    display: flex;
+    color: white;
+    align-items: center;
+    flex-direction: column;
+
+}
+.selectorText{
+    font-weight: 500;
+    font-size: 18px;
+    padding-bottom: 5px;
+}
 .selector{
-    max-width: 200px;
+    width: 200px;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+    background: #1f1f1f;
 }
 .bodyItems{
     display: flex;
@@ -16,8 +39,8 @@
     position: relative;
     border: none;
     margin: 5px;
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
 }
 
 .favoriteImage{
@@ -37,6 +60,18 @@
     height: 100%;
     border: none;
     background: rgba(0, 0, 0, 0);
+}
+@media (max-width: 690px) {
+    .item{
+        height: 150px;
+        width: 150px;
+    }
+}
+@media (max-width: 370px) {
+    .item{
+        height: 100px;
+        width: 100px;
+    }
 }
 @media (any-hover: hover) {
     .favoriteButton:hover {

@@ -4,14 +4,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {deleteFromFavorite, getFavorites} from "../../slices/FavoritesSlice";
 import Preloader from "../common/Preloader/Preloader";
 import Favorite from "./Favorite/Favorite";
-import {useInitializePage} from "../../hooks/useInitializePage";
+import {useInitialize} from "../../hooks/useInitialize";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
+import NullMessage from "../common/NullMessage/NullMessage";
 
 const Favorites = () => {
     const favorites = useSelector(state => state.favorites.allFavorites)
     const userId = useSelector(state => state.user.id)
-    useInitializePage(!favorites, getFavorites, userId)
+    useInitialize(!favorites, getFavorites, userId)
     const dispatch = useDispatch()
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({'favoriteId': null, 'imageId': null, 'imageUrl': null})
@@ -37,11 +38,7 @@ const Favorites = () => {
     }
     if (Object.entries(favorites).length === 0) {
         return (
-            <div className={c.bodyNullMessage}>
-                <span className={c.nullMessage}>
-                    No favorites
-                </span>
-            </div>
+            <NullMessage message={'No Favorites'}/>
         )
     }
     return (

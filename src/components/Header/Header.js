@@ -11,6 +11,19 @@ const Link = (props) => {
     )
 }
 
+const LicksCount = () => {
+    return(
+        <>
+            <Link path={'RandomCat'} name={'Random Cat'}/>
+            <Link path={'Vote'} name={'Vote'}/>
+            <Link path={'Votes'} name={'Votes'}/>
+            <Link path={'Favorites'} name={'Favorites'}/>
+            <Link path={'FindImage'} name={'FindImage'}/>
+            <Link path={'About'} name={'About'}/>
+        </>
+    )
+}
+
 const Header = () => {
     const [menuOpened, setMenuOpened] = useState(false)
     const switchMenuOpened = () => {
@@ -28,22 +41,10 @@ const Header = () => {
                 <img src={menuIcon} className={c.menuIconImage}/>
             </div>
             <nav className={c.content}>
-                <Link path={'RandomCat'} name={'Random Cat'}/>
-                <Link path={'Vote'} name={'Vote'}/>
-                <Link path={'Votes'} name={'Votes'}/>
-                <Link path={'Favorites'} name={'Favorites'}/>
-                <Link path={'Breeds'} name={'Breeds'}/>
-                <Link path={'FindImage'} name={'Find image'}/>
-                <Link path={'About'} name={'About'}/>
+                <LicksCount/>
             </nav>
             <nav style={{visibility: menuOpened ? 'visible' : 'hidden'}} className={c.contentMini}>
-                <Link path={'RandomCat'} name={'Random Cat'}/>
-                <Link path={'Vote'} name={'Vote'}/>
-                <Link path={'Votes'} name={'Votes'}/>
-                <Link path={'Favorites'} name={'Favorites'}/>
-                <Link path={'Breeds'} name={'Breeds'}/>
-                <Link path={'FindImage'} name={'FindImage'}/>
-                <Link path={'About'} name={'About'}/>
+                <LicksCount/>
             </nav>
         </header>
     )

@@ -2,15 +2,16 @@ import {useSelector} from "react-redux";
 import {getAllVotes} from "../../slices/VoteSlice";
 import Preloader from "../common/Preloader/Preloader";
 import c from "./VotesList.module.css";
-import {useInitializePage} from "../../hooks/useInitializePage";
+import {useInitialize} from "../../hooks/useInitialize";
 import VoteListItem from "./VoteListItem/VoteListItem";
 import React from "react";
+import NullMessage from "../common/NullMessage/NullMessage";
 
 const VotesList = () => {
     const votes = useSelector(state => state.vote.allVotes)
     const userId = useSelector(state => state.user.id)
 
-    useInitializePage(!votes,getAllVotes,userId)
+    useInitialize(!votes,getAllVotes,userId)
 
     if (!votes) {
         return (
@@ -19,11 +20,7 @@ const VotesList = () => {
     }
     if(Object.entries(votes).length === 0){
         return(
-            <div className={c.bodyNullMessage}>
-                <span className={c.nullMessage}>
-                    No votes
-                </span>
-            </div>
+            <NullMessage message={'No Votes'}/>
         )
     }
     return (

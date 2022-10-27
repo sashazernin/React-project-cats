@@ -4,7 +4,7 @@ import c from './RandomCat.module.css'
 import heart from "../../images/Heart.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
 import heartActive from "../../images/HeartActive.png";
-import {useInitializePage} from "../../hooks/useInitializePage";
+import {useInitialize} from "../../hooks/useInitialize";
 import React, {useEffect} from "react";
 import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import Preloader from "../common/Preloader/Preloader";
@@ -14,7 +14,7 @@ const RandomCat = () => {
     const dispatch = useDispatch()
     const catImage = useSelector(state => state.randomCat.catUrl)
     const imageId = useSelector(state => state.randomCat.id)
-    useInitializePage(!catImage, getRandomCat)
+    useInitialize(!catImage, getRandomCat)
     const favoriteId = useSelector(state => state.randomCat.favoriteId)
     const [switchFavorite] = useSwitchFavorite(imageId, favoriteId,!!favoriteId, (id) => dispatch(setFavoriteId(id)))
 

@@ -3,7 +3,7 @@ import randomCatSlice from "../slices/RandomCatSlice";
 import userSlice from "../slices/UserSlice";
 import favoritesSlice from "../slices/FavoritesSlice";
 import votesListSlice from "../slices/VoteSlice";
-import breedsSlice from "../slices/BreedsSlice";
+import findImageSlice from "../slices/findImageSlice";
 
 export const store = configureStore({
     reducer:{
@@ -11,6 +11,6 @@ export const store = configureStore({
         user:userSlice,
         favorites:favoritesSlice,
         vote: votesListSlice,
-        breeds: breedsSlice
+        findImage: findImageSlice
     }
 })

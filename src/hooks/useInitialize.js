@@ -2,19 +2,20 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useToggling} from "./useToggling";
 
-function useInitializePage(condition, functionForInitialize, data) {
+function useInitialize(condition, functionForInitialize, data) {
+
     const dispatch = useDispatch()
-    const [call,toggleCall] = useToggling(false)
+    const [call,toggleCall] = useToggling(true)
     useEffect(() => {
         async function startFetching() {
             await dispatch(functionForInitialize(!!data && data))
             toggleCall()
         }
 
-        if (condition && !call) {
+        if (condition && call) {
             startFetching();
         }
     }, [condition]);
 }
 
-export {useInitializePage}
+export {useInitialize}

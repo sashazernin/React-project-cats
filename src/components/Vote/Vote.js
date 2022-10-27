@@ -5,7 +5,7 @@ import {getRandomCat, createVote, setFavoriteId, getAllVotes} from "../../slices
 import heart from "../../images/Heart.png"
 import heartActive from "../../images/HeartActive.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
-import {useInitializePage} from "../../hooks/useInitializePage";
+import {useInitialize} from "../../hooks/useInitialize";
 import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import {useEffect} from "react";
 import Preloader from "../common/Preloader/Preloader";
@@ -18,7 +18,7 @@ const Vote = () => {
     const userId = useSelector(state => state.user.id)
     const [voteInProcess, setVoteInProcess] = useState(false)
 
-    useInitializePage(!catImage, getRandomCat)
+    useInitialize(!catImage, getRandomCat)
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))

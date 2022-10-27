@@ -7,7 +7,6 @@ function useCheckFavorite(imageId){
     useEffect(()=>{
         if(!!imageId){
             if(!!favorites && favoriteData.id !== imageId){
-                console.log('check')
                 favorites.forEach(item => item.image_id === imageId && setFavoriteData({'isFavorite':true,'favoriteId':item.id}))
             }
         }
