@@ -98,6 +98,7 @@ const FindImage = () => {
             <div className={c.selectorsContainer}>
                 <div className={c.selectorBody}>
                     <span className={c.selectorText}>Breed</span>
+                    <span className={c.label}></span>
                     <select className={c.selector} onChange={switchImage} name={'breed'} value={requestData.breed_id}>
                         <option value={''}>All</option>
                         {breedsList.map(breed =>
@@ -107,6 +108,7 @@ const FindImage = () => {
                 </div>
                 <div className={c.selectorBody}>
                     <span className={c.selectorText}>Category</span>
+                    <span className={c.label}></span>
                     <select className={c.selector} onChange={switchImage} name={'category'} value={requestData.category}>
                         <option value={''}>All</option>
                         {categoriesList.map(category =>
@@ -115,12 +117,14 @@ const FindImage = () => {
                     </select>
                 </div>
                 <div className={c.selectorBody}>
-                    <spam className={c.selectorText}>Type</spam>
+                    <span className={c.selectorText}>Type</span>
+                    <span className={c.label}></span>
                     <select className={c.selector} onChange={switchImage} name={'type'}>
                         <option value={''}>All</option>
                         <option value={'png,jpg'}>Static</option>
                         <option value={'gif'}>Animated</option>
                     </select>
+
                 </div>
 
             </div>

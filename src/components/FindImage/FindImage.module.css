@@ -12,11 +12,27 @@
 }
 
 .selectorBody{
+    padding: 0px 5px;
     display: flex;
     color: white;
     align-items: center;
     flex-direction: column;
+}
 
+.label {
+    width: 100%;
+    position: relative;
+}
+.label:after {
+    content:'<>';
+    font: 15px "Consolas", monospace;
+    color: #818181;
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 8px;
+    top:4px;
+    position: absolute;
+    pointer-events: none;
 }
 .selectorText{
     font-weight: 500;
@@ -29,6 +45,17 @@
     padding: 5px;
     border-radius: 10px;
     background: #1f1f1f;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+}
+@media (max-width: 480px) {
+    .selector{
+        width: 150px;
+    }
+    .label:after{
+    }
 }
 .bodyItems{
     display: flex;

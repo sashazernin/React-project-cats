@@ -38,7 +38,9 @@ const Header = () => {
                      src='https://cdn131.picsart.com/276546134009211.png?to=crop&type=webp&r=1456x1456&q=85'/>
             </NavLink>
             <div ref={menuRef} className={c.menuIcon} onClick={switchMenuOpened}>
-                <img src={menuIcon} className={c.menuIconImage}/>
+                <div className={c.menuIconBurger}>
+                    <span></span>
+                </div>
             </div>
             <nav className={c.content}>
                 <LicksCount/>
