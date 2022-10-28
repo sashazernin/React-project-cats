@@ -11,7 +11,6 @@ function useOutsideClick(isOpened, close){
     }
 
     useEffect(() => {
-        console.log(ref)
         if(isOpened){
             document.addEventListener('click', handleClick)
             return () => {

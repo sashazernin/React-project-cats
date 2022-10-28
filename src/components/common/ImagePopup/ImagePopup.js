@@ -32,10 +32,8 @@ const ImagePopup = (props) => {
             <div onClick={(e)=>{e.stopPropagation()}} className={c.container}>
                 <img className={c.image} src={props.imageUrl}/>
                 <div className={c.controlPanel}>
-                    <button className={c.favButton}>
-                        <img className={c.favImage} src={isFavorite ? heartActive : heart} onClick={() => {
-                            toggleIsFavorite()
-                        }}/>
+                    <button className={c.favButton} onClick={() => {toggleIsFavorite()}}>
+                        <img className={c.favImage} src={isFavorite ? heartActive : heart}/>
                     </button>
                 </div>
             </div>

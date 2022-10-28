@@ -49,10 +49,8 @@ const Vote = () => {
                 {!catImage ? <Preloader/> :
                     <>
                         <img className={c.catImage} src={catImage}/>
-                        <button className={c.favButton}>
-                            <img className={c.favImage} src={!favoriteId ? heart : heartActive} onClick={() => {
-                                switchFavorite()
-                            }}/>
+                        <button className={c.favButton} onClick={() => {switchFavorite()}}>
+                            <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
                         </button>
                     </>
                 }

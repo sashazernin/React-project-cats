@@ -8,8 +8,8 @@
 .cat {
     position: relative;
     width: 80% ;
-    min-height: 70vh;
-    height: 70vh;
+    min-height: 65vh;
+    height: 65vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,11 +61,14 @@
 }
 
 .favButton {
+    display: flex;
     border: none;
     background: rgba(0, 0, 0, 0);
     right: 6px;
     bottom: 6px;
     position: absolute;
+    padding: 0;
+
 }
 
 .favImage {
@@ -74,12 +77,12 @@
 }
 
 @media (any-hover: hover) {
-    .favImage:hover {
+    .favButton:hover {
         cursor: pointer;
         background: rgba(255, 255, 255, 0.4);
     }
 }
-
-.favImage:active {
+.favImage:active{
+    pointer-events: none;
     width: 33px;
 }

@@ -8,8 +8,8 @@
 .cat {
     position: relative;
     width: 80% ;
-    min-height: 70vh;
-    height: 70vh;
+    min-height: 65vh;
+    height: 65vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,14 +94,11 @@
         padding: 10px 15px;
         margin: 10px 10px;
     }
-
-    .cat {
-        min-height: 45vh;
-        height: 45vh;
-    }
 }
 
 .favButton {
+    display: flex;
+    padding: 0;
     border: none;
     background: rgba(0, 0, 0, 0);
     right: 6px;
@@ -120,5 +117,6 @@
 }
 
 .favImage:active {
+    pointer-events: none;
     width: 33px;
 }

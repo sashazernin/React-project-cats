@@ -1,7 +1,6 @@
 import c from './Header.module.css';
 import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
-import menuIcon from '../../images/menuIcon.png'
 import {useOutsideClick} from "../../hooks/useOutsideClick";
 
 const Link = (props) => {
@@ -18,7 +17,7 @@ const LicksCount = () => {
             <Link path={'Vote'} name={'Vote'}/>
             <Link path={'Votes'} name={'Votes'}/>
             <Link path={'Favorites'} name={'Favorites'}/>
-            <Link path={'FindImage'} name={'FindImage'}/>
+            <Link path={'FindImage'} name={'Find image'}/>
             <Link path={'About'} name={'About'}/>
         </>
     )
