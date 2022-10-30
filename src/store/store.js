@@ -4,6 +4,7 @@ import userSlice from "../slices/UserSlice";
 import favoritesSlice from "../slices/FavoritesSlice";
 import votesListSlice from "../slices/VoteSlice";
 import findImageSlice from "../slices/findImageSlice";
+import uploadSlice from "../slices/UploadSlice";
 
 export const store = configureStore({
     reducer:{
@@ -11,6 +12,7 @@ export const store = configureStore({
         user:userSlice,
         favorites:favoritesSlice,
         vote: votesListSlice,
-        findImage: findImageSlice
+        findImage: findImageSlice,
+        upload:uploadSlice
     }
 })

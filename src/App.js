@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getFavorites} from "./slices/FavoritesSlice";
 import Preloader from "./components/common/Preloader/Preloader";
 import FindImage from "./components/FindImage/FindImage";
+import Upload from "./components/Upload/Upload";
 
 function App() {
     const dispatch = useDispatch()
@@ -27,6 +28,7 @@ function App() {
                         <Header/>
                         <Routes>
                             <Route path='FindImage' element={<FindImage/>}/>
+                            <Route path='Upload' element={<Upload/>}/>
                             <Route path='' element={<Navigate to='/RandomCat'/>}/>
                             <Route path='RandomCat' element={<RandomCat/>}/>
                             <Route path='Favorites' element={<Favorites/>}/>

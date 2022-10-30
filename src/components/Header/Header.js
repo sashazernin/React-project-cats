@@ -18,6 +18,7 @@ const LicksCount = () => {
             <Link path={'Votes'} name={'Votes'}/>
             <Link path={'Favorites'} name={'Favorites'}/>
             <Link path={'FindImage'} name={'Find image'}/>
+            <Link path={'Upload'} name={'Upload'}/>
             <Link path={'About'} name={'About'}/>
         </>
     )

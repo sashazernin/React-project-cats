@@ -22,11 +22,13 @@ export const getImages = createAsyncThunk('findImage/getImages',
             if(resp.data.length !== 0){
                 dispatch(setImages(resp.data))
             }else{
-                dispatch(setRequestData({'name': 'allPagesLoad', 'value': true}))
+                dispatch(setRequestData({'name':'allPagesLoad','value':true}))
             }
-            dispatch(setRequestData({'name': 'isLoading', 'value': false}))
         } catch (error) {
             alert(error)
+        }
+        finally {
+            dispatch(setRequestData({'name':'isLoading','value':false}))
         }
     }
 )
@@ -58,7 +60,6 @@ const findImageSlice = createSlice({
     initialState,
     reducers: {
         setImages: (state, action) => {
-            console.log(action.payload)
             if (!state.allImages || !action.payload) {
                 state.allImages = action.payload
             } else {
