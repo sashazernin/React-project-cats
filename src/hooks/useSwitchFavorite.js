@@ -3,7 +3,7 @@ import {favoriteApi} from "../Api";
 import {useState} from "react";
 import {getFavorites} from "../slices/FavoritesSlice";
 
-function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId) {
+function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId,funForCall) {
     const userId = useSelector(state => state.user.id)
     const dispatch = useDispatch()
     const [inProcess, setInProcess] = useState(false)
@@ -19,13 +19,15 @@ function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId) {
                     setFavoriteId(resp.data.id)
                 }
                 setInProcess(false)
+                if(!!funForCall){
+                    funForCall()
+                }
             } else {
                 alert('some Error')
             }
         } catch (error) {
             alert(error)
         }
-        return null
     }
 
     const deleteFromFavorite = async () => {

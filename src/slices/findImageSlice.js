@@ -10,6 +10,7 @@ const initialState = {
         'category': '',
         'type': '',
         'page': 0,
+        'lastPage': null,
         'isLoading': false,
         'allPagesLoad': false,
         'userId': null
@@ -19,6 +20,7 @@ const initialState = {
 export const getImages = createAsyncThunk('findImage/getImages',
     async (data, {dispatch}) => {
         try {
+            dispatch(setRequestData({'name': 'isLoading', 'value': true}))
             const resp = await imagesAPI.getCatImages(data)
             if (resp.data.length !== 0) {
                 dispatch(setImages(resp.data))
@@ -76,6 +78,7 @@ const findImageSlice = createSlice({
             function reset() {
                 state.requestData.page = 0
                 state.requestData.allPagesLoad = false
+                state.requestData.lastPage = null
             }
 
             switch (action.payload.name) {
@@ -102,7 +105,12 @@ const findImageSlice = createSlice({
                     break
                 case 'userId':
                     state.requestData.userId = action.payload.value
+                    break
+                case 'lastPage':
+                    state.requestData.lastPage = action.payload.value
+                    break
                 default:
+                    console.error('Wrong name in findImageSlice/setRequestData')
             }
         },
     }

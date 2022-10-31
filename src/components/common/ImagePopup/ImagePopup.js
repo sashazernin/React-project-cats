@@ -13,7 +13,6 @@ const ImagePopup = (props) => {
             closePopup(isFavorite)
         }
     })
-
     useEffect(() => {
         document.addEventListener('keydown',escPressed)
         return () => {

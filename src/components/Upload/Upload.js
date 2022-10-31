@@ -10,6 +10,7 @@ import NullMessage from "../common/NullMessage/NullMessage";
 import {useInitialize} from "../../hooks/useInitialize";
 import {getImages, setRequestInfo, uploadImage} from "../../slices/UploadSlice";
 import {useEffect} from "react";
+import {useToggling} from "../../hooks/useToggling";
 
 const Upload = () => {
     const dispatch = useDispatch()
@@ -18,31 +19,32 @@ const Upload = () => {
     const pageRef = useRef()
     const [popupOpened, setPopupOpened] = useState(false)
     const requestInfo = useSelector(state => state.upload.requestInfo)
+    const imageIsLoading = useSelector(state => state.upload.imageIsLoading)
     const [popupData, setPopupData] = useState({
         'favoriteId': null,
         'imageId': null,
         'imageUrl': null,
         'isFavorite': false,
-        'setFavoriteData': null
+        'setFavoriteData': null,
     })
-    useInitialize(!allUploadImages,(data)=>{dispatch(setRequestInfo(data))},{'name':'userId','value':userId})
+    useInitialize(!allUploadImages, setRequestInfo, {'name': 'userId', 'value': userId})
     useEffect(() => {
-        console.log(requestInfo)
-        if (!requestInfo.isLoading && !!requestInfo.userId) {
+        if (!requestInfo.isLoading && !!requestInfo.userId && requestInfo.page !== requestInfo.lastPage) {
+
+            dispatch(setRequestInfo({'name': 'lastPage', 'value': requestInfo.page}))
             dispatch(getImages(requestInfo))
         }
-    }, [requestInfo.page,requestInfo.userId])
+    }, [requestInfo.page, requestInfo.userId])
     const [switchFavorite] = useSwitchFavorite(
         popupData.imageId,
         popupData.favoriteId,
         popupData.isFavorite,
-        (id) => {
-            popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
+        (id) => {popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
         }
     )
 
     function openPopup(favoriteId, imageId, imageUrl, isFavorite, setFavoriteData) {
-        setPopupData({favoriteId, imageId, imageUrl, isFavorite, setFavoriteData})
+        setPopupData({...popupData,favoriteId, imageId, imageUrl, isFavorite, setFavoriteData})
         setPopupOpened(true)
     }
 
@@ -55,10 +57,11 @@ const Upload = () => {
             }
         }
 
-        if (isFavorite !== popupData.isFavorite) {
+        if (isFavorite !== popupData.isFavorite && !popupData.inProcess) {
             switchFavoriteFunction()
         }
     }
+
     window.onscroll = function () {
         if (pageRef.current.getBoundingClientRect().bottom <= window.innerHeight + 500
             && !requestInfo.isLoading
@@ -72,15 +75,16 @@ const Upload = () => {
             <Preloader/>
         )
     }
-    const onUploadImage = (e) => {
+    const onUploadImage = async (e) => {
         if (e.target.files.length) {
-            dispatch(uploadImage({'file':e.target.files[0],'sub_id':userId}))
+            await dispatch(uploadImage({'file': e.target.files[0], 'sub_id': userId}))
         }
     }
 
     return (
         <div ref={pageRef} className={c.body}>
             <ImagePopup
+                inProcess = {popupData.inProcess}
                 isFavorite={popupData.isFavorite}
                 isOpened={popupOpened}
                 close={closePopup}
@@ -88,7 +92,20 @@ const Upload = () => {
                 imageId={popupData.imageId}
                 imageUrl={popupData.imageUrl}
             />
-            <input type={"file"} onChange={onUploadImage}/>
+            <div className={c.fileUploadBody}>
+                <label className={c.fileUploadContainer}>
+                    <span className={c.fileUploadText}>Upload a cat</span>
+                    <input type={"file"} onChange={onUploadImage} accept="image/*" className={c.fileUploadInput}/>
+                    {imageIsLoading &&
+                        <>
+                            <div className={c.preloader}>
+                                <Preloader/>
+                            </div>
+                        </>
+                    }
+                </label>
+            </div>
+
             {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'no Images'}/> :
                 <div className={c.bodyItems}>
                     {allUploadImages.map(f =>
@@ -107,12 +124,13 @@ const Upload = () => {
                     </div>
                 </div>
             }
+            {requestInfo.isLoading && <Preloader/>}
         </div>
     )
 }
 
 const Image = (props) => {
-    const [favoriteData,, setFavoriteData] = useCheckFavorite(props.imageId)
+    const [favoriteData, , setFavoriteData] = useCheckFavorite(props.imageId)
     return (
         <div className={c.item}>
             <div className={c.favoriteButtonContainer}>

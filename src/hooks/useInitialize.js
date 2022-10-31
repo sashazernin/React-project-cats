@@ -3,12 +3,11 @@ import {useDispatch} from "react-redux";
 import {useToggling} from "./useToggling";
 
 function useInitialize(condition, functionForInitialize, data) {
-
     const dispatch = useDispatch()
     const [call,toggleCall] = useToggling(true)
     useEffect(() => {
         async function startFetching() {
-            await dispatch(functionForInitialize(!!data && data))
+            dispatch(functionForInitialize(!!data && data))
             toggleCall()
         }
 

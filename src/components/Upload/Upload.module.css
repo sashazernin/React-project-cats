@@ -88,6 +88,43 @@
     border: none;
     background: rgba(0, 0, 0, 0);
 }
+.fileUploadBody{
+
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
+.fileUploadContainer{
+    position: relative;
+    cursor: pointer;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: black;
+}
+.fileUploadText{
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    color: white;
+    pointer-events: none;
+}
+.fileUploadInput{
+    position: absolute;
+    z-index: -1;
+    display: block;
+    width: 0;
+    height: 0;
+}
+.preloader{
+    position: absolute;
+    right: -40px;
+    width: 40px;
+    height: 40px;
+}
 @media (max-width: 690px) {
     .item{
         height: 150px;

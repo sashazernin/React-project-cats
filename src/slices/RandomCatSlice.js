@@ -10,7 +10,6 @@ const initialState = {
 export const getRandomCat = createAsyncThunk('randomCat/getRandomCat',
     async (_, {dispatch}) => {
         const resp = await getRandomCatImage()
-        console.log(resp)
         dispatch(setCat(resp.data['0']))
     }
 )
