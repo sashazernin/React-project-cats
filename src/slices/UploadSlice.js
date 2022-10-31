@@ -50,7 +50,11 @@ const uploadSlice = createSlice({
     initialState,
     reducers: {
         setImages: (state, action) => {
-            state.allUploadImages = action.payload
+            if (!state.allUploadImages || !action.payload) {
+                state.allUploadImages = action.payload
+            } else {
+                action.payload.forEach(item => state.allUploadImages.push(item))
+            }
         },
         setRequestInfo: (state,action) => {
             switch (action.payload.name){

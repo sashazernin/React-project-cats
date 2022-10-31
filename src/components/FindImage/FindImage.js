@@ -20,14 +20,7 @@ const FindImage = () => {
     const pageRef = useRef()
     useInitialize(!breedsList, getBreedsList)
     useInitialize(!categoriesList, getCategoriesList)
-    useInitialize(!requestData, (data) => dispatch(setRequestData(data)), {
-        'breed_id': '',
-        'category': '',
-        'type': '',
-        'page': 0,
-        'isLoading': false,
-        userId
-    })
+    useInitialize(!allImages, (data) => dispatch(setRequestData(data)), {'name':'userId','value':userId})
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({
         'favoriteId': null,
@@ -69,7 +62,7 @@ const FindImage = () => {
             dispatch(setRequestData({'name': 'isLoading', 'value': true}))
             dispatch(getImages(requestData))
         }
-    }, [requestData.page, requestData.breed_id, requestData.category, requestData.type])
+    }, [requestData.page, requestData.breed_id, requestData.category, requestData.type,requestData.userId])
 
     const switchImage = (e) => {
         dispatch(setImages(null))

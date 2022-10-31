@@ -27,6 +27,7 @@ const Upload = () => {
     })
     useInitialize(!allUploadImages,(data)=>{dispatch(setRequestInfo(data))},{'name':'userId','value':userId})
     useEffect(() => {
+        console.log(requestInfo)
         if (!requestInfo.isLoading && !!requestInfo.userId) {
             dispatch(getImages(requestInfo))
         }

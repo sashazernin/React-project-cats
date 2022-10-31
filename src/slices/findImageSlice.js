@@ -11,7 +11,8 @@ const initialState = {
         'type': '',
         'page': 0,
         'isLoading': false,
-        'allPagesLoad':false
+        'allPagesLoad': false,
+        'userId': null
     }
 }
 
@@ -19,16 +20,15 @@ export const getImages = createAsyncThunk('findImage/getImages',
     async (data, {dispatch}) => {
         try {
             const resp = await imagesAPI.getCatImages(data)
-            if(resp.data.length !== 0){
+            if (resp.data.length !== 0) {
                 dispatch(setImages(resp.data))
-            }else{
-                dispatch(setRequestData({'name':'allPagesLoad','value':true}))
+            } else {
+                dispatch(setRequestData({'name': 'allPagesLoad', 'value': true}))
             }
         } catch (error) {
             alert(error)
-        }
-        finally {
-            dispatch(setRequestData({'name':'isLoading','value':false}))
+        } finally {
+            dispatch(setRequestData({'name': 'isLoading', 'value': false}))
         }
     }
 )
@@ -73,37 +73,36 @@ const findImageSlice = createSlice({
             state.categoriesList = action.payload.map(category => ({'id': category.id, 'name': category.name}))
         },
         setRequestData: (state, action) => {
-            if (!action.payload.name) {
-                state.requestData = action.payload
-            } else {
-                function reset(){
-                    state.requestData.page = 0
-                    state.requestData.allPagesLoad = false
-                }
-                switch (action.payload.name) {
-                    case 'breed':
-                        state.requestData.breed_id = action.payload.value
-                        reset()
-                        break
-                    case 'category':
-                        state.requestData.category = action.payload.value
-                        reset()
-                        break
-                    case 'type':
-                        state.requestData.type = action.payload.value
-                        reset()
-                        break
-                    case 'page':
-                        state.requestData.page = action.payload.value
-                        break
-                    case 'isLoading':
-                        state.requestData.isLoading = action.payload.value
-                        break
-                    case 'allPagesLoad':
-                        state.requestData.allPagesLoad = action.payload.value
-                        break
-                    default:
-                }
+            function reset() {
+                state.requestData.page = 0
+                state.requestData.allPagesLoad = false
+            }
+
+            switch (action.payload.name) {
+                case 'breed':
+                    state.requestData.breed_id = action.payload.value
+                    reset()
+                    break
+                case 'category':
+                    state.requestData.category = action.payload.value
+                    reset()
+                    break
+                case 'type':
+                    state.requestData.type = action.payload.value
+                    reset()
+                    break
+                case 'page':
+                    state.requestData.page = action.payload.value
+                    break
+                case 'isLoading':
+                    state.requestData.isLoading = action.payload.value
+                    break
+                case 'allPagesLoad':
+                    state.requestData.allPagesLoad = action.payload.value
+                    break
+                case 'userId':
+                    state.requestData.userId = action.payload.value
+                default:
             }
         },
     }
