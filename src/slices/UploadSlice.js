@@ -10,44 +10,58 @@ const initialState = {
         'allPagesLoad': false,
         'userId': null
     },
-    'imageIsLoading':false
+    'imageIsLoading': false
 }
 
 export const getImages = createAsyncThunk('Upload/getImages',
-    async (data, {dispatch}) => {
+    async ([data, setErrorMessage], {dispatch}) => {
         try {
             dispatch(setRequestInfo({'name': 'isLoading', 'value': true}))
             const resp = await imagesAPI.getUploadImages(data)
-            if (resp.data.length !== 0) {
-                dispatch(setImages(resp.data))
-            } else {
+            if (resp.data.length === 0) {
                 dispatch(setRequestInfo({'name': 'allPagesLoad', 'value': true}))
             }
+            dispatch(setImages(resp.data))
         } catch (error) {
             alert(error)
+            setErrorMessage(error)
         } finally {
             dispatch(setRequestInfo({'name': 'isLoading', 'value': false}))
         }
     }
 )
 export const uploadImage = createAsyncThunk('Upload/uploadImage',
-    async (data, {dispatch}) => {
-    dispatch(setImageIsLoading(true))
+    async ([data, setErrorMessage, setSuccessMessage], {dispatch}) => {
+        dispatch(setImageIsLoading(true))
         try {
             const resp = await imagesAPI.uploadImage(data)
+            setSuccessMessage('Success')
         } catch (error) {
-            if (error.response.data === "Invalid file data. Check you are sending the formdata.append('file', ...} format'") {
-                alert('You are trying to upload a file. Not an image!')
+            switch (error.response.data) {
+                case "Invalid file data. Check you are sending the formdata.append('file', ...} format'":
+                    setErrorMessage('You are trying to upload a file. Not an image!')
+                    break
+                case "Classifcation failed: correct animal not found.":
+                    setErrorMessage("it's not a cat")
+                    break
+                default:
+                    setErrorMessage(error.message)
             }
-            if (error.response.data === "Classifcation failed: correct animal not found.") {
-                alert("it's not a cat")
-            }
-        }
-        finally {
+        } finally {
             dispatch(setImageIsLoading(false))
         }
     }
 )
+
+export const deleteUploadImage = createAsyncThunk('Upload/deleteUploadImage',
+    async (data, {dispatch}) => {
+        try {
+            dispatch(deleteImage(data))
+            const resp = await imagesAPI.deleteUploadImage(data)
+        } catch (error) {
+            alert(error)
+        }
+    })
 
 const uploadSlice = createSlice({
     name: 'Upload',
@@ -81,13 +95,16 @@ const uploadSlice = createSlice({
                     console.error('Wrong name in UpdateSlice/setRequestData')
             }
         },
-        setImageIsLoading:(state,action) => {
+        setImageIsLoading: (state, action) => {
             state.imageIsLoading = action.payload
+        },
+        deleteImage: (state, action) => {
+            state.allUploadImages = state.allUploadImages.filter(image => image.id !== action.payload)
         }
     }
 })
 
-export const {setImages, setRequestInfo,setImageIsLoading} = uploadSlice.actions
+export const {setImages, setRequestInfo, setImageIsLoading, deleteImage} = uploadSlice.actions
 export default uploadSlice.reducer
 
 

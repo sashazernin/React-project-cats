@@ -9,7 +9,7 @@ const Favorite = (props) => {
                         onClick={()=>{props.openImage(props.favoriteId,props.imageId,props.imageUrl,true)}}>
                 </button>
             </div>
-            <img className={c.favoriteImage} src={props.imageUrl}/>
+            {!!props.imageUrl ? <img className={c.favoriteImage} src={props.imageUrl}/> : <span className={c.deleteImage}>This image has been deleted</span>}
         </div>
     )
 }

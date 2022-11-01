@@ -8,9 +8,9 @@ import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import {deleteFromFavorite} from "../../slices/FavoritesSlice";
 import NullMessage from "../common/NullMessage/NullMessage";
 import {useInitialize} from "../../hooks/useInitialize";
-import {getImages, setRequestInfo, uploadImage} from "../../slices/UploadSlice";
+import {deleteUploadImage, getImages, setRequestInfo, uploadImage} from "../../slices/UploadSlice";
 import {useEffect} from "react";
-import {useToggling} from "../../hooks/useToggling";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Upload = () => {
     const dispatch = useDispatch()
@@ -20,6 +20,8 @@ const Upload = () => {
     const [popupOpened, setPopupOpened] = useState(false)
     const requestInfo = useSelector(state => state.upload.requestInfo)
     const imageIsLoading = useSelector(state => state.upload.imageIsLoading)
+    const [errorMessage,setErrorMessage] = useState()
+    const [successMessage,setSuccessMessage] = useState()
     const [popupData, setPopupData] = useState({
         'favoriteId': null,
         'imageId': null,
@@ -30,9 +32,8 @@ const Upload = () => {
     useInitialize(!allUploadImages, setRequestInfo, {'name': 'userId', 'value': userId})
     useEffect(() => {
         if (!requestInfo.isLoading && !!requestInfo.userId && requestInfo.page !== requestInfo.lastPage) {
-
             dispatch(setRequestInfo({'name': 'lastPage', 'value': requestInfo.page}))
-            dispatch(getImages(requestInfo))
+            dispatch(getImages([requestInfo,setErrorMessage]))
         }
     }, [requestInfo.page, requestInfo.userId])
     const [switchFavorite] = useSwitchFavorite(
@@ -77,12 +78,29 @@ const Upload = () => {
     }
     const onUploadImage = async (e) => {
         if (e.target.files.length) {
-            await dispatch(uploadImage({'file': e.target.files[0], 'sub_id': userId}))
+            if(e.target.files[0].size <= 262144){
+                await dispatch(uploadImage([{'file': e.target.files[0], 'sub_id': userId},setErrorMessage,setSuccessMessage]))
+            }
+            else{
+                if(e.target.files[0].type !== 'image/jpeg'){
+                    setErrorMessage('Your image is too big. Max size is 250kb. Try to convert your image to jpg')
+                }else{
+                    setErrorMessage('Your image is too big. Max size is 250kb')
+                }
+
+            }
         }
+    }
+
+    const deleteImage = (imageId) => {
+        dispatch(deleteUploadImage(imageId))
+        setPopupOpened(false)
     }
 
     return (
         <div ref={pageRef} className={c.body}>
+            <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
+            <MessagePopup type={'success'} message={successMessage} clear={()=>{setSuccessMessage(null)}} />
             <ImagePopup
                 inProcess = {popupData.inProcess}
                 isFavorite={popupData.isFavorite}
@@ -91,6 +109,7 @@ const Upload = () => {
                 favoriteId={popupData.favoriteId}
                 imageId={popupData.imageId}
                 imageUrl={popupData.imageUrl}
+                buttons = {[{'name':'delete Image','onClickFunction':deleteImage,'functionData':popupData.imageId}]}
             />
             <div className={c.fileUploadBody}>
                 <label className={c.fileUploadContainer}>
@@ -106,7 +125,7 @@ const Upload = () => {
                 </label>
             </div>
 
-            {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'no Images'}/> :
+            {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'No uploaded images'}/> :
                 <div className={c.bodyItems}>
                     {allUploadImages.map(f =>
                         <Image key={f.id} openPopup={openPopup} condition={popupOpened} isFavorite={false}

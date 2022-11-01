@@ -29,11 +29,16 @@ const ImagePopup = (props) => {
         <div onClick={() => {closePopup(isFavorite)}} style={{visibility: props.isOpened ? 'visible' : 'hidden'}} className={c.body}>
             <button className={c.cancelPopup}></button>
             <div onClick={(e)=>{e.stopPropagation()}} className={c.container}>
-                <img className={c.image} src={props.imageUrl}/>
+                {!!props.imageUrl ? <img className={c.image} src={props.imageUrl}/> : <span className={c.imageDelete}>This image has been deleted</span>}
                 <div className={c.controlPanel}>
                     <button className={c.favButton} onClick={() => {toggleIsFavorite()}}>
                         <img className={c.favImage} src={isFavorite ? heartActive : heart}/>
                     </button>
+                    {!!props.buttons && (Object.entries(props.buttons).length !== 0 && (props.buttons.map(button =>
+                        <button key={button.name} onClick={()=>{button.onClickFunction(button.functionData)}}>
+                            {button.name}
+                        </button>
+                    )))}
                 </div>
             </div>
         </div>

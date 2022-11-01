@@ -68,5 +68,8 @@ export const imagesAPI = {
                 'Content-Type':'multipart/form-data'
             }
         })
+    },
+    deleteUploadImage(data){
+        return instance.delete(`images/${data}`)
     }
 }

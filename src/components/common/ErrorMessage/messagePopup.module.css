@@ -1,0 +1,25 @@
+.body{
+    pointer-events: none;
+    z-index: 999;
+    top: 0;
+    left: 10px;
+    right: 0;
+    bottom: 10px;
+    display: flex;
+    position: fixed;
+    justify-content: start;
+    align-items: end;
+    transition: 0.5s;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    width: 200px;
+
+}
+.message{
+    max-width: 100%;
+    color: white;
+}
