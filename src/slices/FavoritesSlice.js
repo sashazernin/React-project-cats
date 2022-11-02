@@ -7,12 +7,12 @@ const initialState = {
 }
 
 export const getFavorites = createAsyncThunk('favorites/getFavorites',
-    async (data, {dispatch}) => {
+    async ([data,setErrorMessage], {dispatch}) => {
         try {
             const resp = await favoriteApi.getAllFavorites(data)
             dispatch(setFavorites(resp.data))
         } catch(error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     }
 )

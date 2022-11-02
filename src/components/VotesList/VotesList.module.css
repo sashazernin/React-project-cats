@@ -13,15 +13,22 @@
     text-align: center;
 }
 .item{
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background: #525252;
-    width: 100%;
 }
 .itemImage{
     object-fit: cover;
     height: 80px;
-    width: 80px;
+    width: 100%;
+}
+.likeText{
+    color: greenyellow;
+}
+.dislikeText{
+    color: red;
+}
+.idText{
+    color: white;
+}
+.deleteButton{
+
 }

@@ -9,6 +9,7 @@ import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
 import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import {deleteFromFavorite} from "../../slices/FavoritesSlice";
 import NullMessage from "../common/NullMessage/NullMessage";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const FindImage = () => {
     const dispatch = useDispatch()
@@ -18,8 +19,9 @@ const FindImage = () => {
     const categoriesList = useSelector(state => state.findImage.categoriesList)
     const requestData = useSelector(state => state.findImage.requestData)
     const pageRef = useRef()
-    useInitialize(!breedsList, getBreedsList)
-    useInitialize(!categoriesList, getCategoriesList)
+    const [errorMessage,setErrorMessage] = useState()
+    useInitialize(!breedsList, getBreedsList,setErrorMessage)
+    useInitialize(!categoriesList, getCategoriesList,setErrorMessage)
     useInitialize(!allImages, setRequestData, {'name':'userId','value':userId})
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({
@@ -33,6 +35,7 @@ const FindImage = () => {
         popupData.imageId,
         popupData.favoriteId,
         popupData.isFavorite,
+        setErrorMessage,
         (id) => {
             popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
         }
@@ -60,7 +63,7 @@ const FindImage = () => {
     useEffect(() => {
         if (!requestData.isLoading && !!requestData.userId && requestData.page !== requestData.lastPage) {
             dispatch(setRequestData({'name':'lastPage','value':requestData.page}))
-            dispatch(getImages(requestData))
+            dispatch(getImages([requestData,setErrorMessage]))
         }
     }, [requestData.page, requestData.breed_id, requestData.category, requestData.type,requestData.userId])
 
@@ -83,6 +86,7 @@ const FindImage = () => {
     }
     return (
         <div ref={pageRef} className={c.body}>
+            <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
             <ImagePopup
                 isFavorite={popupData.isFavorite}
                 isOpened={popupOpened}

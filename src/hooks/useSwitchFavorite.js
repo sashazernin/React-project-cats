@@ -3,7 +3,7 @@ import {favoriteApi} from "../Api";
 import {useState} from "react";
 import {getFavorites} from "../slices/FavoritesSlice";
 
-function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId,funForCall) {
+function useSwitchFavorite(imageId, favoriteId,isFavorite, setErrorMessage,setFavoriteId,) {
     const userId = useSelector(state => state.user.id)
     const dispatch = useDispatch()
     const [inProcess, setInProcess] = useState(false)
@@ -14,19 +14,16 @@ function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId,funForC
                 'sub_id': userId
             })
             if (resp.data.message === "SUCCESS") {
-                dispatch(getFavorites(userId))
+                dispatch(getFavorites([userId,setErrorMessage]))
                 if (!!setFavoriteId) {
                     setFavoriteId(resp.data.id)
                 }
                 setInProcess(false)
-                if(!!funForCall){
-                    funForCall()
-                }
             } else {
-                alert('some Error')
+                setErrorMessage('Some error')
             }
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     }
 
@@ -35,15 +32,15 @@ function useSwitchFavorite(imageId, favoriteId,isFavorite, setFavoriteId,funForC
             const resp = await favoriteApi.deleteFromFavorite(favoriteId)
             if (resp.data.message === "SUCCESS") {
                 if (!!setFavoriteId) {
-                    dispatch(getFavorites(userId))
+                    dispatch(getFavorites([userId,setErrorMessage]))
                     setFavoriteId(null)
                 }
                 setInProcess(false)
             } else {
-                alert('some Error')
+                setErrorMessage('Some error')
             }
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     }
 

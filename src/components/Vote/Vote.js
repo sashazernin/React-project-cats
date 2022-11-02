@@ -10,6 +10,7 @@ import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import {useEffect} from "react";
 import Preloader from "../common/Preloader/Preloader";
 import {setImage} from "../../slices/VoteSlice";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Vote = () => {
     const dispatch = useDispatch()
@@ -17,8 +18,8 @@ const Vote = () => {
     const imageId = useSelector(state => state.vote.id)
     const userId = useSelector(state => state.user.id)
     const [voteInProcess, setVoteInProcess] = useState(false)
-
-    useInitialize(!catImage, getRandomCat)
+    const [errorMessage, setErrorMessage] = useState()
+    useInitialize(!catImage, getRandomCat, setErrorMessage)
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
@@ -27,29 +28,35 @@ const Vote = () => {
         if (!voteInProcess) {
             dispatch(setImage({'url': null, 'id': null}))
             setVoteInProcess(true)
-            await dispatch(createVote({
+            await dispatch(createVote([{
                 'image_id': imageId,
                 'sub_id': userId,
                 value
-            }))
+            }, setErrorMessage]))
             setVoteInProcess(false)
             clear()
             setFavoriteId(null)
-
-            dispatch(getAllVotes(userId))
+            dispatch(getAllVotes([userId, setErrorMessage]))
         }
     }
 
     const favoriteId = useSelector(state => state.vote.favoriteId)
-    const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId,(id)=>dispatch(setFavoriteId(id)))
-
+    const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
+            dispatch(setFavoriteId(id))
+        }
+    )
     return (
         <div className={c.body}>
+            <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                setErrorMessage(null)
+            }}/>
             <div className={c.cat}>
                 {!catImage ? <Preloader/> :
                     <>
                         <img className={c.catImage} src={catImage}/>
-                        <button className={c.favButton} onClick={() => {switchFavorite()}}>
+                        <button className={c.favButton} onClick={() => {
+                            switchFavorite()
+                        }}>
                             <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
                         </button>
                     </>
@@ -57,11 +64,11 @@ const Vote = () => {
             </div>
             <div>
                 <button className={c.likeItButton} onClick={() => {
-                    vote(1)
+                    vote(1).then()
                 }}>I like it
                 </button>
                 <button className={c.dontLikeItButton} onClick={() => {
-                    vote(0)
+                    vote(0).then()
                 }}>I don't like it
                 </button>
             </div>

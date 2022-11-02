@@ -23,7 +23,6 @@ export const getImages = createAsyncThunk('Upload/getImages',
             }
             dispatch(setImages(resp.data))
         } catch (error) {
-            alert(error)
             setErrorMessage(error)
         } finally {
             dispatch(setRequestInfo({'name': 'isLoading', 'value': false}))
@@ -54,12 +53,12 @@ export const uploadImage = createAsyncThunk('Upload/uploadImage',
 )
 
 export const deleteUploadImage = createAsyncThunk('Upload/deleteUploadImage',
-    async (data, {dispatch}) => {
+    async ([data,setErrorMessage], {dispatch}) => {
         try {
             dispatch(deleteImage(data))
             const resp = await imagesAPI.deleteUploadImage(data)
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     })
 

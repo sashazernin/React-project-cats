@@ -18,7 +18,7 @@ const initialState = {
 }
 
 export const getImages = createAsyncThunk('findImage/getImages',
-    async (data, {dispatch}) => {
+    async ([data,setErrorMessage], {dispatch}) => {
         try {
             dispatch(setRequestData({'name': 'isLoading', 'value': true}))
             const resp = await imagesAPI.getCatImages(data)
@@ -28,7 +28,7 @@ export const getImages = createAsyncThunk('findImage/getImages',
                 dispatch(setRequestData({'name': 'allPagesLoad', 'value': true}))
             }
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         } finally {
             dispatch(setRequestData({'name': 'isLoading', 'value': false}))
         }
@@ -36,23 +36,23 @@ export const getImages = createAsyncThunk('findImage/getImages',
 )
 
 export const getBreedsList = createAsyncThunk('findImage/getBreedsList',
-    async (data, {dispatch}) => {
+    async (setErrorMessage, {dispatch}) => {
         try {
             const resp = await breedsApi.getBreedsList()
             dispatch(setBreedsList(resp.data))
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     }
 )
 
 export const getCategoriesList = createAsyncThunk('findImage/getBreedsList',
-    async (data, {dispatch}) => {
+    async (setErrorMessage, {dispatch}) => {
         try {
             const resp = await listApi.getCategoriesList()
             dispatch(setCategoriesList(resp.data))
         } catch (error) {
-            alert(error)
+            setErrorMessage(error.message)
         }
     }
 )

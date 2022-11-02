@@ -1,30 +1,36 @@
-import {useSelector} from "react-redux";
-import {getAllVotes} from "../../slices/VoteSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {deleteFromVote, getAllVotes} from "../../slices/VoteSlice";
 import Preloader from "../common/Preloader/Preloader";
 import c from "./VotesList.module.css";
 import {useInitialize} from "../../hooks/useInitialize";
-import VoteListItem from "./VoteListItem/VoteListItem";
 import React from "react";
 import NullMessage from "../common/NullMessage/NullMessage";
+import {useState} from "react";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const VotesList = () => {
+    const dispatch = useDispatch()
     const votes = useSelector(state => state.vote.allVotes)
     const userId = useSelector(state => state.user.id)
-
-    useInitialize(!votes,getAllVotes,userId)
-
+    const [errorMessage, setErrorMessage] = useState()
+    useInitialize(!votes, getAllVotes, [userId, setErrorMessage])
     if (!votes) {
         return (
             <Preloader/>
         )
     }
-    if(Object.entries(votes).length === 0){
-        return(
+    if (Object.entries(votes).length === 0) {
+        return (
             <NullMessage message={'No Votes'}/>
         )
     }
     return (
+        <>
+            <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                setErrorMessage(null)
+            }}/>
             <table className={c.table}>
+
                 <thead>
                 <tr>
                     <td className={c.headerText}>Photo</td>
@@ -35,10 +41,31 @@ const VotesList = () => {
                 </thead>
                 <tbody>
                 {[...votes].reverse().map(f =>
-                    <VoteListItem key={f.id} value={f.value} imageUrl={f.image.url} id={f.id}/>
+                    <tr key={f.id} className={c.item}>
+                        <td style={{width: '100px'}}>
+                            <img className={c.itemImage} src={f.image.url}/>
+                        </td>
+                        <td style={{textAlign: 'center'}}>
+                            {f.value === 1 ?
+                                <span className={c.likeText}>Like</span> :
+                                <span className={c.dislikeText}>Dislike</span>
+                            }
+                        </td>
+                        <td style={{textAlign: 'center'}}>
+                            <span className={c.idText}>{f.id}</span>
+                        </td>
+                        <td style={{textAlign: 'end'}}>
+                            <button className={c.deleteButton} onClick={() => {
+                                dispatch(deleteFromVote([f.id, setErrorMessage]))
+                            }}>Delete
+                            </button>
+                        </td>
+                    </tr>
                 )}
                 </tbody>
             </table>
+        </>
+
     )
 }
 

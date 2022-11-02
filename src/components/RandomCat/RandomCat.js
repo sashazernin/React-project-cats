@@ -5,30 +5,38 @@ import heart from "../../images/Heart.png";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
 import heartActive from "../../images/HeartActive.png";
 import {useInitialize} from "../../hooks/useInitialize";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useCheckFavorite} from "../../hooks/useCheckFavorite";
 import Preloader from "../common/Preloader/Preloader";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const RandomCat = () => {
-
     const dispatch = useDispatch()
     const catImage = useSelector(state => state.randomCat.catUrl)
     const imageId = useSelector(state => state.randomCat.id)
-    useInitialize(!catImage, getRandomCat)
+    const [errorMessage, setErrorMessage] = useState()
+    useInitialize(!catImage, getRandomCat, [setErrorMessage])
     const favoriteId = useSelector(state => state.randomCat.favoriteId)
-    const [switchFavorite] = useSwitchFavorite(imageId, favoriteId,!!favoriteId, (id) => dispatch(setFavoriteId(id)))
-
+    const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
+            dispatch(setFavoriteId(id))
+        }
+    )
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
     }, [favoriteData])
     return (
         <div className={c.body}>
+            <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                setErrorMessage(null)
+            }}/>
             <div className={c.cat}>
                 {!catImage ? <Preloader/> :
                     <>
                         <img className={c.catImage} src={catImage}/>
-                        <button className={c.favButton} onClick={() => {switchFavorite()}}>
+                        <button className={c.favButton} onClick={() => {
+                            switchFavorite()
+                        }}>
                             <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
                         </button>
                     </>
@@ -39,7 +47,7 @@ const RandomCat = () => {
                     clear()
                     dispatch(setFavoriteId(null))
                     dispatch(setCat({'url': null, 'id': null}))
-                    dispatch(getRandomCat())
+                    dispatch(getRandomCat([setErrorMessage]))
                 }}>Show me the cat!
                 </button>
             </div>

@@ -11,19 +11,23 @@ import {getFavorites} from "./slices/FavoritesSlice";
 import Preloader from "./components/common/Preloader/Preloader";
 import FindImage from "./components/FindImage/FindImage";
 import Upload from "./components/Upload/Upload";
+import MessagePopup from "./components/common/ErrorMessage/messagePopup";
+import {useState} from "react";
 
 function App() {
     const dispatch = useDispatch()
     const userId = useSelector(state => state.user.id)
     const favorites = useSelector(state => state.favorites.allFavorites)
+    const [errorMessage,setErrorMessage] = useState()
     if(!favorites){
-        dispatch(getFavorites(userId))
+        dispatch(getFavorites([userId,setErrorMessage]))
         return <Preloader/>
     }
     return (
         <HashRouter>
             <div className={'appBody'}>
                 <div className='appContainer'>
+                    <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
                     <div className='appContent'>
                         <Header/>
                         <Routes>

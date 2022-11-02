@@ -8,15 +8,17 @@ import {useInitialize} from "../../hooks/useInitialize";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
 import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
 import NullMessage from "../common/NullMessage/NullMessage";
+import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Favorites = () => {
     const favorites = useSelector(state => state.favorites.allFavorites)
     const userId = useSelector(state => state.user.id)
-    useInitialize(!favorites, getFavorites, userId)
+    const [errorMessage,setErrorMessage] = useState()
+    useInitialize(!favorites, getFavorites, [userId,setErrorMessage])
     const dispatch = useDispatch()
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({'favoriteId': null, 'imageId': null, 'imageUrl': null})
-    const [switchFavorite] = useSwitchFavorite(popupData.imageId, popupData.favoriteId,!!popupData.favoriteId)
+    const [switchFavorite] = useSwitchFavorite(popupData.imageId, popupData.favoriteId,!!popupData.favoriteId,setErrorMessage)
 
     function openPopup(favoriteId, imageId, imageUrl,isFavorite) {
         setPopupData({favoriteId, imageId, imageUrl,isFavorite})
@@ -43,6 +45,7 @@ const Favorites = () => {
     }
     return (
         <div className={c.body}>
+            <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
             <ImagePopup
                 isFavorite={popupData.isFavorite}
                 isOpened={popupOpened}

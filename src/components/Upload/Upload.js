@@ -40,6 +40,7 @@ const Upload = () => {
         popupData.imageId,
         popupData.favoriteId,
         popupData.isFavorite,
+        setErrorMessage,
         (id) => {popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
         }
     )
@@ -59,7 +60,7 @@ const Upload = () => {
         }
 
         if (isFavorite !== popupData.isFavorite && !popupData.inProcess) {
-            switchFavoriteFunction()
+            switchFavoriteFunction().then()
         }
     }
 
@@ -93,7 +94,7 @@ const Upload = () => {
     }
 
     const deleteImage = (imageId) => {
-        dispatch(deleteUploadImage(imageId))
+        dispatch(deleteUploadImage([imageId,setErrorMessage]))
         setPopupOpened(false)
     }
 
