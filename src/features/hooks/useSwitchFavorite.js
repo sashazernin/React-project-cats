@@ -4,17 +4,17 @@ import {useState} from "react";
 import {getFavorites} from "../slices/FavoritesSlice";
 
 function useSwitchFavorite(imageId, favoriteId,isFavorite, setErrorMessage,setFavoriteId,) {
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const dispatch = useDispatch()
     const [inProcess, setInProcess] = useState(false)
     const addToFavorite = async () => {
         try {
             const resp = await favoriteApi.createAFavorite({
                 'image_id': imageId,
-                'sub_id': userId
+                'sub_id': SubscriberName
             })
             if (resp.data.message === "SUCCESS") {
-                dispatch(getFavorites([userId,setErrorMessage]))
+                dispatch(getFavorites([SubscriberName,setErrorMessage]))
                 if (!!setFavoriteId) {
                     setFavoriteId(resp.data.id)
                 }
@@ -32,7 +32,7 @@ function useSwitchFavorite(imageId, favoriteId,isFavorite, setErrorMessage,setFa
             const resp = await favoriteApi.deleteFromFavorite(favoriteId)
             if (resp.data.message === "SUCCESS") {
                 if (!!setFavoriteId) {
-                    dispatch(getFavorites([userId,setErrorMessage]))
+                    dispatch(getFavorites([SubscriberName,setErrorMessage]))
                     setFavoriteId(null)
                 }
                 setInProcess(false)

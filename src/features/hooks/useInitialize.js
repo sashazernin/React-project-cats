@@ -2,14 +2,18 @@ import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {useToggling} from "./useToggling";
 
-function useInitialize(condition, functionForInitialize, data) {
-
+function useInitialize(condition,usingDispatch, functionForInitialize, data) {
     const dispatch = useDispatch()
     const [call,toggleCall] = useToggling(true)
     useEffect(() => {
 
         if (condition && call) {
-            dispatch(functionForInitialize(!!data && data))
+            console.log(condition)
+            if(usingDispatch){
+                dispatch(functionForInitialize(!!data && data))
+            }else{
+                functionForInitialize(!!data && data)
+            }
             toggleCall()
         }
     }, [condition]);

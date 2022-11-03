@@ -2,7 +2,7 @@ import React, {useCallback, useEffect} from "react";
 import c from './ImagePopup.module.css'
 import heart from "../../../images/Heart.png";
 import heartActive from "../../../images/HeartActive.png";
-import {useToggling} from "../../../hooks/useToggling";
+import {useToggling} from "../../../features/hooks/useToggling";
 
 const ImagePopup = (props) => {
     const closePopup = (isFavorite) => {

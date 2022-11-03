@@ -3,19 +3,19 @@ import c from './Upload.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../common/Preloader/Preloader";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
-import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
-import {useCheckFavorite} from "../../hooks/useCheckFavorite";
-import {deleteFromFavorite} from "../../slices/FavoritesSlice";
+import {useSwitchFavorite} from "../../features/hooks/useSwitchFavorite";
+import {useCheckFavorite} from "../../features/hooks/useCheckFavorite";
+import {deleteFromFavorite} from "../../features/slices/FavoritesSlice";
 import NullMessage from "../common/NullMessage/NullMessage";
-import {useInitialize} from "../../hooks/useInitialize";
-import {deleteUploadImage, getImages, setRequestInfo, uploadImage} from "../../slices/UploadSlice";
+import {useInitialize} from "../../features/hooks/useInitialize";
+import {deleteUploadImage, getImages, setRequestInfo, uploadImage} from "../../features/slices/UploadSlice";
 import {useEffect} from "react";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Upload = () => {
     const dispatch = useDispatch()
     const allUploadImages = useSelector(state => state.upload.allUploadImages)
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const pageRef = useRef()
     const [popupOpened, setPopupOpened] = useState(false)
     const requestInfo = useSelector(state => state.upload.requestInfo)
@@ -29,7 +29,7 @@ const Upload = () => {
         'isFavorite': false,
         'setFavoriteData': null,
     })
-    useInitialize(!allUploadImages, setRequestInfo, {'name': 'userId', 'value': userId})
+    useInitialize(!allUploadImages, true,setRequestInfo, {'name': 'userId', 'value': SubscriberName})
     useEffect(() => {
         if (!requestInfo.isLoading && !!requestInfo.userId && requestInfo.page !== requestInfo.lastPage) {
             dispatch(setRequestInfo({'name': 'lastPage', 'value': requestInfo.page}))
@@ -80,7 +80,7 @@ const Upload = () => {
     const onUploadImage = async (e) => {
         if (e.target.files.length) {
             if(e.target.files[0].size <= 262144){
-                await dispatch(uploadImage([{'file': e.target.files[0], 'sub_id': userId},setErrorMessage,setSuccessMessage]))
+                await dispatch(uploadImage([{'file': e.target.files[0], 'sub_id': SubscriberName},setErrorMessage,setSuccessMessage]))
             }
             else{
                 if(e.target.files[0].type !== 'image/jpeg'){

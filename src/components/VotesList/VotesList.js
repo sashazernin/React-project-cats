@@ -1,8 +1,8 @@
 import {useDispatch, useSelector} from "react-redux";
-import {deleteFromVote, getAllVotes} from "../../slices/VoteSlice";
+import {deleteFromVote, getAllVotes} from "../../features/slices/VoteSlice";
 import Preloader from "../common/Preloader/Preloader";
 import c from "./VotesList.module.css";
-import {useInitialize} from "../../hooks/useInitialize";
+import {useInitialize} from "../../features/hooks/useInitialize";
 import React from "react";
 import NullMessage from "../common/NullMessage/NullMessage";
 import {useState} from "react";
@@ -11,9 +11,9 @@ import MessagePopup from "../common/ErrorMessage/messagePopup";
 const VotesList = () => {
     const dispatch = useDispatch()
     const votes = useSelector(state => state.vote.allVotes)
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [errorMessage, setErrorMessage] = useState()
-    useInitialize(!votes, getAllVotes, [userId, setErrorMessage])
+    useInitialize(!votes,true, getAllVotes, [SubscriberName, setErrorMessage])
     if (!votes) {
         return (
             <Preloader/>

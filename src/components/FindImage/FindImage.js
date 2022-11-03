@@ -1,28 +1,28 @@
 import React, {useEffect, useRef, useState} from "react";
 import c from './FindImage.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getBreedsList, getImages, getCategoriesList, setImages, setRequestData} from "../../slices/findImageSlice";
+import {getBreedsList, getImages, getCategoriesList, setImages, setRequestData} from "../../features/slices/findImageSlice";
 import Preloader from "../common/Preloader/Preloader";
-import {useInitialize} from "../../hooks/useInitialize";
+import {useInitialize} from "../../features/hooks/useInitialize";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
-import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
-import {useCheckFavorite} from "../../hooks/useCheckFavorite";
-import {deleteFromFavorite} from "../../slices/FavoritesSlice";
+import {useSwitchFavorite} from "../../features/hooks/useSwitchFavorite";
+import {useCheckFavorite} from "../../features/hooks/useCheckFavorite";
+import {deleteFromFavorite} from "../../features/slices/FavoritesSlice";
 import NullMessage from "../common/NullMessage/NullMessage";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const FindImage = () => {
     const dispatch = useDispatch()
     const allImages = useSelector(state => state.findImage.allImages)
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const breedsList = useSelector(state => state.findImage.breedsList)
     const categoriesList = useSelector(state => state.findImage.categoriesList)
     const requestData = useSelector(state => state.findImage.requestData)
     const pageRef = useRef()
     const [errorMessage,setErrorMessage] = useState()
-    useInitialize(!breedsList, getBreedsList,setErrorMessage)
-    useInitialize(!categoriesList, getCategoriesList,setErrorMessage)
-    useInitialize(!allImages, setRequestData, {'name':'userId','value':userId})
+    useInitialize(!breedsList, true,getBreedsList,setErrorMessage)
+    useInitialize(!categoriesList, true,getCategoriesList,setErrorMessage)
+    useInitialize(!allImages, true,setRequestData, {'name':'userId','value':SubscriberName})
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({
         'favoriteId': null,

@@ -1,15 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit'
-import randomCatSlice from "../slices/RandomCatSlice";
-import userSlice from "../slices/UserSlice";
-import favoritesSlice from "../slices/FavoritesSlice";
-import votesListSlice from "../slices/VoteSlice";
-import findImageSlice from "../slices/findImageSlice";
-import uploadSlice from "../slices/UploadSlice";
+import randomCatSlice from "../features/slices/RandomCatSlice";
+import SubscriberSlice from "../features/slices/SubscriberSlice";
+import favoritesSlice from "../features/slices/FavoritesSlice";
+import votesListSlice from "../features/slices/VoteSlice";
+import findImageSlice from "../features/slices/findImageSlice";
+import uploadSlice from "../features/slices/UploadSlice";
 
 export const store = configureStore({
     reducer:{
         randomCat:randomCatSlice,
-        user:userSlice,
+        Subscriber:SubscriberSlice,
         favorites:favoritesSlice,
         vote: votesListSlice,
         findImage: findImageSlice,

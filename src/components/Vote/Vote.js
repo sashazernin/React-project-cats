@@ -1,25 +1,25 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import c from './Vote.module.css'
-import {getRandomCat, createVote, setFavoriteId, getAllVotes} from "../../slices/VoteSlice";
+import {getRandomCat, createVote, setFavoriteId, getAllVotes} from "../../features/slices/VoteSlice";
 import heart from "../../images/Heart.png"
 import heartActive from "../../images/HeartActive.png";
-import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
-import {useInitialize} from "../../hooks/useInitialize";
-import {useCheckFavorite} from "../../hooks/useCheckFavorite";
+import {useSwitchFavorite} from "../../features/hooks/useSwitchFavorite";
+import {useInitialize} from "../../features/hooks/useInitialize";
+import {useCheckFavorite} from "../../features/hooks/useCheckFavorite";
 import {useEffect} from "react";
 import Preloader from "../common/Preloader/Preloader";
-import {setImage} from "../../slices/VoteSlice";
+import {setImage} from "../../features/slices/VoteSlice";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Vote = () => {
     const dispatch = useDispatch()
     const catImage = useSelector(state => state.vote.catUrl)
     const imageId = useSelector(state => state.vote.id)
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [voteInProcess, setVoteInProcess] = useState(false)
     const [errorMessage, setErrorMessage] = useState()
-    useInitialize(!catImage, getRandomCat, setErrorMessage)
+    useInitialize(!catImage,true, getRandomCat, setErrorMessage)
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
@@ -30,13 +30,13 @@ const Vote = () => {
             setVoteInProcess(true)
             await dispatch(createVote([{
                 'image_id': imageId,
-                'sub_id': userId,
+                'sub_id': SubscriberName,
                 value
             }, setErrorMessage]))
             setVoteInProcess(false)
             clear()
             setFavoriteId(null)
-            dispatch(getAllVotes([userId, setErrorMessage]))
+            dispatch(getAllVotes([SubscriberName, setErrorMessage]))
         }
     }
 

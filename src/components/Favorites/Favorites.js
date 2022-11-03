@@ -1,20 +1,19 @@
 import React, {useState} from "react";
 import c from './Favorites.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {deleteFromFavorite, getFavorites} from "../../slices/FavoritesSlice";
+import {deleteFromFavorite, getFavorites} from "../../features/slices/FavoritesSlice";
 import Preloader from "../common/Preloader/Preloader";
-import Favorite from "./Favorite/Favorite";
-import {useInitialize} from "../../hooks/useInitialize";
+import {useInitialize} from "../../features/hooks/useInitialize";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
-import {useSwitchFavorite} from "../../hooks/useSwitchFavorite";
+import {useSwitchFavorite} from "../../features/hooks/useSwitchFavorite";
 import NullMessage from "../common/NullMessage/NullMessage";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
 
 const Favorites = () => {
     const favorites = useSelector(state => state.favorites.allFavorites)
-    const userId = useSelector(state => state.user.id)
+    const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [errorMessage,setErrorMessage] = useState()
-    useInitialize(!favorites, getFavorites, [userId,setErrorMessage])
+    useInitialize(!favorites, getFavorites, [SubscriberName,setErrorMessage])
     const dispatch = useDispatch()
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({'favoriteId': null, 'imageId': null, 'imageUrl': null})
@@ -69,6 +68,19 @@ const Favorites = () => {
             </div>
             <div className={c.item} >
             </div>
+        </div>
+    )
+}
+
+const Favorite = (props) => {
+    return (
+        <div className={c.item}>
+            <div className={c.favoriteButtonContainer}>
+                <button className={c.favoriteButton}
+                        onClick={()=>{props.openImage(props.favoriteId,props.imageId,props.imageUrl,true)}}>
+                </button>
+            </div>
+            {!!props.imageUrl ? <img className={c.favoriteImage} src={props.imageUrl}/> : <span className={c.deleteImage}>This image has been deleted</span>}
         </div>
     )
 }
