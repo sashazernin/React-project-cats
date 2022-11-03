@@ -22,7 +22,6 @@ function App() {
     const favorites = useSelector(state => state.favorites.allFavorites)
     const [errorMessage, setErrorMessage] = useState()
     const checkAndSetSubscriberName = () => {
-        console.log(localStorage.getItem('subscriberName'))
         if (localStorage.getItem('subscriberName') !== null) {
             dispatch(setSubscriberName(localStorage.getItem('subscriberName')))
         } else {

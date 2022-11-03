@@ -8,7 +8,6 @@ function useInitialize(condition,usingDispatch, functionForInitialize, data) {
     useEffect(() => {
 
         if (condition && call) {
-            console.log(condition)
             if(usingDispatch){
                 dispatch(functionForInitialize(!!data && data))
             }else{

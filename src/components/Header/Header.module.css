@@ -71,7 +71,7 @@
 }
 .menuIcon{
     user-select: none;
-    background: linear-gradient(rgba(75, 132, 255, 0.41), #8f075f);
+    background: linear-gradient(rgb(47, 72, 136), #8f075f);
     cursor: pointer;
     visibility: hidden;
     right: 10px;
@@ -159,5 +159,8 @@
 }
 .errorMessageContainer{
     height: 20px;
-
+}
+.errorMessage{
+    color: red;
+    font-family: Calibri;
 }

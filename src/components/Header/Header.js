@@ -34,9 +34,20 @@ const Header = () => {
     }
     const [menuRef] = useOutsideClick(menuOpened, switchMenuOpened)
     const setNewSubscriberName = (e) => {
-        if (e.target.value.length <= 20) {
-            localStorage.setItem('subscriberName', e.target.value)
+
+        if (e.target.value.length <= 20 && e.target.value !== subscriberName
+            && !(e.target.value.length === 0 && subscriberName === 'publicSubscriber')) {
+
+            if (e.target.value.length === 0) {
+                localStorage.removeItem('subscriberName')
+            } else {
+                localStorage.setItem('subscriberName', e.target.value)
+            }
+            console.log('qwe')
             window.location.reload()
+        } else {
+            e.target.value = e.target.defaultValue
+            setInputError('')
         }
     }
     const onInputChange = (e) => {
@@ -46,6 +57,16 @@ const Header = () => {
             if (inputError !== '') {
                 setInputError('')
             }
+        }
+    }
+    const unFocusInput = (e) => {
+        if (e.keyCode === 13) {
+            e.target.blur()
+        }
+        if (e.keyCode === 27) {
+            e.target.value = e.target.defaultValue
+            setInputError('')
+            e.target.blur()
         }
     }
     return (
@@ -61,10 +82,13 @@ const Header = () => {
                         <input className={c.headerInput} placeholder={'Subscriber name'}
                                defaultValue={subscriberName !== 'publicSubscriber' ? subscriberName : null}
                                onChange={onInputChange}
-                               onBlur={setNewSubscriberName}/>
+                               onBlur={setNewSubscriberName}
+                               onKeyDown={unFocusInput}
+                        />
                     </div>
                     <div className={c.errorMessageContainer}>
-                        <span style={{color: 'red'}}>{inputError}</span>
+                        <span
+                            className={c.errorMessage}>{(!inputError && subscriberName === 'publicSubscriber') ? 'U\'re using a public name' : inputError}</span>
                     </div>
                 </div>
 
