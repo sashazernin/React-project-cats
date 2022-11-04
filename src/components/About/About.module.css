@@ -1,0 +1,24 @@
+.body{
+    display: flex;
+    justify-content: center;
+}
+.body span{
+    padding-bottom: 10px;
+    color: white;
+    font-size: 25px;
+    font-family: Calibri;
+}
+.body a{
+    color: #93d5f1;
+}
+@media (any-hover){
+    .body a:hover{
+        color: #51e4ea;
+    }
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 86%;
+}
+

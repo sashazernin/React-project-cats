@@ -54,7 +54,7 @@ export const listApi = {
 
 export const imagesAPI = {
     getCatImages(data) {
-        return instance.get(`images/search?limit=20&page=${data.page}&breed_id=${data.breed_id}&mime_types=${data.type}&category_ids=${data.category}&order=Asc&sub_id=${data.userId}`)
+        return instance.get(`images/search?limit=20&page=${data.page}&breed_id=${data.breed_id}&mime_types=${data.type}&category_ids=${data.category}&order=Desc&sub_id=${data.userId}`)
     },
     getRandomCatImage() {
         return instance.get(`images/search`)

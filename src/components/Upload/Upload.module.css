@@ -1,5 +1,10 @@
-.body {
-    padding: 20px;
+.body{
+    padding: 0 20px;
+}
+.title{
+    margin-left: 5%;
+}
+.container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -131,7 +136,7 @@
         width: 150px;
     }
 }
-@media (max-width: 370px) {
+@media (max-width: 400px) {
     .item{
         height: 100px;
         width: 100px;

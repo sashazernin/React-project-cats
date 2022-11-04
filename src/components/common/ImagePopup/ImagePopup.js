@@ -35,7 +35,7 @@ const ImagePopup = (props) => {
                         <img className={c.favImage} src={isFavorite ? heartActive : heart}/>
                     </button>
                     {!!props.buttons && (Object.entries(props.buttons).length !== 0 && (props.buttons.map(button =>
-                        <button key={button.name} onClick={()=>{button.onClickFunction(button.functionData)}}>
+                        <button className={c.buttonMassive} key={button.name} onClick={()=>{button.onClickFunction(button.functionData)}}>
                             {button.name}
                         </button>
                     )))}

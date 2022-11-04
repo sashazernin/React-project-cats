@@ -20,8 +20,8 @@ const Upload = () => {
     const [popupOpened, setPopupOpened] = useState(false)
     const requestInfo = useSelector(state => state.upload.requestInfo)
     const imageIsLoading = useSelector(state => state.upload.imageIsLoading)
-    const [errorMessage,setErrorMessage] = useState()
-    const [successMessage,setSuccessMessage] = useState()
+    const [errorMessage, setErrorMessage] = useState()
+    const [successMessage, setSuccessMessage] = useState()
     const [popupData, setPopupData] = useState({
         'favoriteId': null,
         'imageId': null,
@@ -29,11 +29,11 @@ const Upload = () => {
         'isFavorite': false,
         'setFavoriteData': null,
     })
-    useInitialize(!allUploadImages, true,setRequestInfo, {'name': 'userId', 'value': SubscriberName})
+    useInitialize(!allUploadImages, true, setRequestInfo, {'name': 'userId', 'value': SubscriberName})
     useEffect(() => {
         if (!requestInfo.isLoading && !!requestInfo.userId && requestInfo.page !== requestInfo.lastPage) {
             dispatch(setRequestInfo({'name': 'lastPage', 'value': requestInfo.page}))
-            dispatch(getImages([requestInfo,setErrorMessage]))
+            dispatch(getImages([requestInfo, setErrorMessage]))
         }
     }, [requestInfo.page, requestInfo.userId])
     const [switchFavorite] = useSwitchFavorite(
@@ -41,12 +41,13 @@ const Upload = () => {
         popupData.favoriteId,
         popupData.isFavorite,
         setErrorMessage,
-        (id) => {popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
+        (id) => {
+            popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
         }
     )
 
     function openPopup(favoriteId, imageId, imageUrl, isFavorite, setFavoriteData) {
-        setPopupData({...popupData,favoriteId, imageId, imageUrl, isFavorite, setFavoriteData})
+        setPopupData({...popupData, favoriteId, imageId, imageUrl, isFavorite, setFavoriteData})
         setPopupOpened(true)
     }
 
@@ -79,13 +80,15 @@ const Upload = () => {
     }
     const onUploadImage = async (e) => {
         if (e.target.files.length) {
-            if(e.target.files[0].size <= 262144){
-                await dispatch(uploadImage([{'file': e.target.files[0], 'sub_id': SubscriberName},setErrorMessage,setSuccessMessage]))
-            }
-            else{
-                if(e.target.files[0].type !== 'image/jpeg'){
+            if (e.target.files[0].size <= 262144) {
+                await dispatch(uploadImage([{
+                    'file': e.target.files[0],
+                    'sub_id': SubscriberName
+                }, setErrorMessage, setSuccessMessage]))
+            } else {
+                if (e.target.files[0].type !== 'image/jpeg') {
                     setErrorMessage('Your image is too big. Max size is 250kb. Try to convert your image to jpg')
-                }else{
+                } else {
                     setErrorMessage('Your image is too big. Max size is 250kb')
                 }
 
@@ -94,57 +97,68 @@ const Upload = () => {
     }
 
     const deleteImage = (imageId) => {
-        dispatch(deleteUploadImage([imageId,setErrorMessage]))
+        dispatch(deleteUploadImage([imageId, setErrorMessage]))
         setPopupOpened(false)
     }
 
     return (
         <div ref={pageRef} className={c.body}>
-            <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
-            <MessagePopup type={'success'} message={successMessage} clear={()=>{setSuccessMessage(null)}} />
-            <ImagePopup
-                inProcess = {popupData.inProcess}
-                isFavorite={popupData.isFavorite}
-                isOpened={popupOpened}
-                close={closePopup}
-                favoriteId={popupData.favoriteId}
-                imageId={popupData.imageId}
-                imageUrl={popupData.imageUrl}
-                buttons = {[{'name':'delete Image','onClickFunction':deleteImage,'functionData':popupData.imageId}]}
-            />
-            <div className={c.fileUploadBody}>
-                <label className={c.fileUploadContainer}>
-                    <span className={c.fileUploadText}>Upload a cat</span>
-                    <input type={"file"} onChange={onUploadImage} accept="image/*" className={c.fileUploadInput}/>
-                    {imageIsLoading &&
-                        <>
-                            <div className={c.preloader}>
-                                <Preloader/>
-                            </div>
-                        </>
-                    }
-                </label>
-            </div>
-
-            {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'No uploaded images'}/> :
-                <div className={c.bodyItems}>
-                    {allUploadImages.map(f =>
-                        <Image key={f.id} openPopup={openPopup} condition={popupOpened} isFavorite={false}
-                               favoriteId={null} imageId={f.id}
-                               imageUrl={f.url}
-                        />
-                    )}
-                    <div className={c.item}>
-                    </div>
-                    <div className={c.item}>
-                    </div>
-                    <div className={c.item}>
-                    </div>
-                    <div className={c.item}>
-                    </div>
+            <h1 className={c.title}>Upload</h1>
+            <div className={c.container}>
+                <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                    setErrorMessage(null)
+                }}/>
+                <MessagePopup type={'success'} message={successMessage} clear={() => {
+                    setSuccessMessage(null)
+                }}/>
+                <ImagePopup
+                    inProcess={popupData.inProcess}
+                    isFavorite={popupData.isFavorite}
+                    isOpened={popupOpened}
+                    close={closePopup}
+                    favoriteId={popupData.favoriteId}
+                    imageId={popupData.imageId}
+                    imageUrl={popupData.imageUrl}
+                    buttons={[{
+                        'name': 'delete Image',
+                        'onClickFunction': deleteImage,
+                        'functionData': popupData.imageId
+                    }]}
+                />
+                <div className={c.fileUploadBody}>
+                    <label className={c.fileUploadContainer}>
+                        <span className={c.fileUploadText}>Upload a cat</span>
+                        <input type={"file"} onChange={onUploadImage} accept="image/*" className={c.fileUploadInput}/>
+                        {imageIsLoading &&
+                            <>
+                                <div className={c.preloader}>
+                                    <Preloader/>
+                                </div>
+                            </>
+                        }
+                    </label>
                 </div>
-            }
-            {requestInfo.isLoading && <Preloader/>}
+
+                {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'No uploaded images'}/> :
+                    <div className={c.bodyItems}>
+                        {allUploadImages.map(f =>
+                            <Image key={f.id} openPopup={openPopup} condition={popupOpened} isFavorite={false}
+                                   favoriteId={null} imageId={f.id}
+                                   imageUrl={f.url}
+                            />
+                        )}
+                        <div className={c.item}>
+                        </div>
+                        <div className={c.item}>
+                        </div>
+                        <div className={c.item}>
+                        </div>
+                        <div className={c.item}>
+                        </div>
+                    </div>
+                }
+                {requestInfo.isLoading && <Preloader/>}
+            </div>
         </div>
     )
 }

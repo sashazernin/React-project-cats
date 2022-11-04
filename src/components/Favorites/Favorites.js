@@ -12,15 +12,15 @@ import MessagePopup from "../common/ErrorMessage/messagePopup";
 const Favorites = () => {
     const favorites = useSelector(state => state.favorites.allFavorites)
     const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
-    const [errorMessage,setErrorMessage] = useState()
-    useInitialize(!favorites, getFavorites, [SubscriberName,setErrorMessage])
+    const [errorMessage, setErrorMessage] = useState()
+    useInitialize(!favorites, getFavorites, [SubscriberName, setErrorMessage])
     const dispatch = useDispatch()
     const [popupOpened, setPopupOpened] = useState(false)
     const [popupData, setPopupData] = useState({'favoriteId': null, 'imageId': null, 'imageUrl': null})
-    const [switchFavorite] = useSwitchFavorite(popupData.imageId, popupData.favoriteId,!!popupData.favoriteId,setErrorMessage)
+    const [switchFavorite] = useSwitchFavorite(popupData.imageId, popupData.favoriteId, !!popupData.favoriteId, setErrorMessage)
 
-    function openPopup(favoriteId, imageId, imageUrl,isFavorite) {
-        setPopupData({favoriteId, imageId, imageUrl,isFavorite})
+    function openPopup(favoriteId, imageId, imageUrl, isFavorite) {
+        setPopupData({favoriteId, imageId, imageUrl, isFavorite})
         setPopupOpened(true)
     }
 
@@ -44,29 +44,31 @@ const Favorites = () => {
     }
     return (
         <div className={c.body}>
-            <MessagePopup type={'error'} message={errorMessage} clear={()=>{setErrorMessage(null)}} />
-            <ImagePopup
-                isFavorite={popupData.isFavorite}
-                isOpened={popupOpened}
-                close={closePopup}
-                favoriteId={popupData.favoriteId}
-                imageId={popupData.imageId}
-                imageUrl={popupData.imageUrl}
-            />
-            {[...favorites].reverse().map(f =>
-                <Favorite openImage={openPopup} key={f.id} favoriteId={f.id} imageId={f.image_id} imageUrl={f.image.url}/>
-            )}
-            <div className={c.item} >
-            </div>
-            <div className={c.item} >
-            </div>
-            <div className={c.item} >
-            </div>
-            <div className={c.item} >
-            </div>
-            <div className={c.item} >
-            </div>
-            <div className={c.item} >
+            <h1 className={c.title}>Favorites</h1>
+            <div className={c.container}>
+                <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                    setErrorMessage(null)
+                }}/>
+                <ImagePopup
+                    isFavorite={popupData.isFavorite}
+                    isOpened={popupOpened}
+                    close={closePopup}
+                    favoriteId={popupData.favoriteId}
+                    imageId={popupData.imageId}
+                    imageUrl={popupData.imageUrl}
+                />
+                {[...favorites].reverse().map(f =>
+                    <Favorite openImage={openPopup} key={f.id} favoriteId={f.id} imageId={f.image_id}
+                              imageUrl={f.image.url}/>
+                )}
+                <div className={c.item}>
+                </div>
+                <div className={c.item}>
+                </div>
+                <div className={c.item}>
+                </div>
+                <div className={c.item}>
+                </div>
             </div>
         </div>
     )
@@ -77,10 +79,13 @@ const Favorite = (props) => {
         <div className={c.item}>
             <div className={c.favoriteButtonContainer}>
                 <button className={c.favoriteButton}
-                        onClick={()=>{props.openImage(props.favoriteId,props.imageId,props.imageUrl,true)}}>
+                        onClick={() => {
+                            props.openImage(props.favoriteId, props.imageId, props.imageUrl, true)
+                        }}>
                 </button>
             </div>
-            {!!props.imageUrl ? <img className={c.favoriteImage} src={props.imageUrl}/> : <span className={c.deleteImage}>This image has been deleted</span>}
+            {!!props.imageUrl ? <img className={c.favoriteImage} src={props.imageUrl}/> :
+                <span className={c.deleteImage}>This image has been deleted</span>}
         </div>
     )
 }

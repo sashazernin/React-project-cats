@@ -15,6 +15,7 @@ import MessagePopup from "./components/common/ErrorMessage/messagePopup";
 import {useState} from "react";
 import {useInitialize} from "./features/hooks/useInitialize";
 import {setSubscriberName} from "./features/slices/SubscriberSlice";
+import About from "./components/About/About";
 
 function App() {
     const dispatch = useDispatch()
@@ -48,6 +49,7 @@ function App() {
                             <>
                                 <Header/>
                                 <Routes>
+                                    <Route path='About' element={<About/>}/>
                                     <Route path='FindImage' element={<FindImage/>}/>
                                     <Route path='Upload' element={<Upload/>}/>
                                     <Route path='' element={<Navigate to='/RandomCat'/>}/>

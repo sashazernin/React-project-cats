@@ -19,7 +19,7 @@ const Vote = () => {
     const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [voteInProcess, setVoteInProcess] = useState(false)
     const [errorMessage, setErrorMessage] = useState()
-    useInitialize(!catImage,true, getRandomCat, setErrorMessage)
+    useInitialize(!catImage, true, getRandomCat, setErrorMessage)
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
@@ -47,30 +47,33 @@ const Vote = () => {
     )
     return (
         <div className={c.body}>
-            <MessagePopup type={'error'} message={errorMessage} clear={() => {
-                setErrorMessage(null)
-            }}/>
-            <div className={c.cat}>
-                {!catImage ? <Preloader/> :
-                    <>
-                        <img className={c.catImage} src={catImage}/>
-                        <button className={c.favButton} onClick={() => {
-                            switchFavorite()
-                        }}>
-                            <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
-                        </button>
-                    </>
-                }
-            </div>
-            <div>
-                <button className={c.likeItButton} onClick={() => {
-                    vote(1).then()
-                }}>I like it
-                </button>
-                <button className={c.dontLikeItButton} onClick={() => {
-                    vote(0).then()
-                }}>I don't like it
-                </button>
+            <h1 className={c.title}>Vote</h1>
+            <div className={c.container}>
+                <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                    setErrorMessage(null)
+                }}/>
+                <div className={c.imageField}>
+                    {!catImage ? <Preloader/> :
+                        <>
+                            <img className={c.catImage} src={catImage}/>
+                            <button className={c.favButton} onClick={() => {
+                                switchFavorite()
+                            }}>
+                                <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
+                            </button>
+                        </>
+                    }
+                </div>
+                <div>
+                    <button className={c.likeItButton} onClick={() => {
+                        vote(1).then()
+                    }}>I like it
+                    </button>
+                    <button className={c.dontLikeItButton} onClick={() => {
+                        vote(0).then()
+                    }}>I don't like it
+                    </button>
+                </div>
             </div>
         </div>
     )

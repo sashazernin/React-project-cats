@@ -15,7 +15,7 @@ const RandomCat = () => {
     const catImage = useSelector(state => state.randomCat.catUrl)
     const imageId = useSelector(state => state.randomCat.id)
     const [errorMessage, setErrorMessage] = useState()
-    useInitialize(!catImage, true,getRandomCat, [setErrorMessage])
+    useInitialize(!catImage, true, getRandomCat, [setErrorMessage])
     const favoriteId = useSelector(state => state.randomCat.favoriteId)
     const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
             dispatch(setFavoriteId(id))
@@ -27,29 +27,32 @@ const RandomCat = () => {
     }, [favoriteData])
     return (
         <div className={c.body}>
-            <MessagePopup type={'error'} message={errorMessage} clear={() => {
-                setErrorMessage(null)
-            }}/>
-            <div className={c.cat}>
-                {!catImage ? <Preloader/> :
-                    <>
-                        <img className={c.catImage} src={catImage}/>
-                        <button className={c.favButton} onClick={() => {
-                            switchFavorite()
-                        }}>
-                            <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
-                        </button>
-                    </>
-                }
-            </div>
-            <div>
-                <button className={c.newCatButton} onClick={() => {
-                    clear()
-                    dispatch(setFavoriteId(null))
-                    dispatch(setCat({'url': null, 'id': null}))
-                    dispatch(getRandomCat([setErrorMessage]))
-                }}>Show me the cat!
-                </button>
+            <h1 className={c.title}>Random cat</h1>
+            <div className={c.container}>
+                <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                    setErrorMessage(null)
+                }}/>
+                <div className={c.imageField}>
+                    {!catImage ? <Preloader/> :
+                        <>
+                            <img className={c.catImage} src={catImage}/>
+                            <button className={c.favButton} onClick={() => {
+                                switchFavorite()
+                            }}>
+                                <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
+                            </button>
+                        </>
+                    }
+                </div>
+                <div>
+                    <button className={c.newCatButton} onClick={() => {
+                        clear()
+                        dispatch(setFavoriteId(null))
+                        dispatch(setCat({'url': null, 'id': null}))
+                        dispatch(getRandomCat([setErrorMessage]))
+                    }}>Show me the cat!
+                    </button>
+                </div>
             </div>
         </div>
     )

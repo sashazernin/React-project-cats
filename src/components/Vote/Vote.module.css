@@ -1,11 +1,16 @@
-.body {
-    padding-top: 20px;
+.body{
+    padding: 0 20px;
+}
+.title{
+    margin-left: 5%;
+}
+.container {
     display: flex;
     align-items: center;
     flex-direction: column;
 }
 
-.cat {
+.imageField {
     position: relative;
     width: 80% ;
     min-height: 65vh;

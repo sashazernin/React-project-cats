@@ -48,18 +48,21 @@
     background: #212121;
 }
 .activeLink{
+    font-size: 25px;
     padding: 5px 10px;
     font-weight: bold;
     text-decoration: none;
     color: #0bd1d9;
     text-shadow: 0px 0px 20px #09f4ff;
+    font-family: Calibri;
 }
 .link {
+    font-size: 25px;
     padding: 5px 10px;
     font-weight: bold;
     text-decoration: none;
     color: white;
-
+    font-family: Calibri;
 }
 @media (any-hover) {
     .activeLink:hover{
@@ -122,7 +125,7 @@
     pointer-events: none;
     width: 50px;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1050px) {
     .menuIcon{
         visibility: visible;
     }

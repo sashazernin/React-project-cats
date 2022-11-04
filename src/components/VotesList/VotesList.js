@@ -13,7 +13,7 @@ const VotesList = () => {
     const votes = useSelector(state => state.vote.allVotes)
     const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [errorMessage, setErrorMessage] = useState()
-    useInitialize(!votes,true, getAllVotes, [SubscriberName, setErrorMessage])
+    useInitialize(!votes, true, getAllVotes, [SubscriberName, setErrorMessage])
     if (!votes) {
         return (
             <Preloader/>
@@ -25,47 +25,50 @@ const VotesList = () => {
         )
     }
     return (
-        <>
-            <MessagePopup type={'error'} message={errorMessage} clear={() => {
-                setErrorMessage(null)
-            }}/>
-            <table className={c.table}>
+        <div className={c.body}>
+            <h1 className={c.title}>Votes</h1>
+            <div className={c.container}>
 
-                <thead>
-                <tr>
-                    <td className={c.headerText}>Photo</td>
-                    <td className={c.headerText}>Choice</td>
-                    <td className={c.headerText}>id</td>
-                    <td></td>
-                </tr>
-                </thead>
-                <tbody>
-                {[...votes].reverse().map(f =>
-                    <tr key={f.id} className={c.item}>
-                        <td style={{width: '100px'}}>
-                            <img className={c.itemImage} src={f.image.url}/>
-                        </td>
-                        <td style={{textAlign: 'center'}}>
-                            {f.value === 1 ?
-                                <span className={c.likeText}>Like</span> :
-                                <span className={c.dislikeText}>Dislike</span>
-                            }
-                        </td>
-                        <td style={{textAlign: 'center'}}>
-                            <span className={c.idText}>{f.id}</span>
-                        </td>
-                        <td style={{textAlign: 'end'}}>
-                            <button className={c.deleteButton} onClick={() => {
-                                dispatch(deleteFromVote([f.id, setErrorMessage]))
-                            }}>Delete
-                            </button>
-                        </td>
+                <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                    setErrorMessage(null)
+                }}/>
+                <table className={c.table}>
+                    <colgroup>
+                        <col className={c.itemImage}/>
+                        <col/>
+                        <col className={c.lineButton}/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <td className={c.headerText}>Photo</td>
+                        <td className={c.headerText}>Choice</td>
+                        <td></td>
                     </tr>
-                )}
-                </tbody>
-            </table>
-        </>
-
+                    </thead>
+                    <tbody>
+                    {[...votes].reverse().map(f =>
+                        <tr key={f.id} className={c.item}>
+                            <td>
+                                <img className={c.itemImage} src={f.image.url}/>
+                            </td>
+                            <td style={{textAlign: 'center', width: '500px'}}>
+                                {f.value === 1 ?
+                                    <span className={c.text} style={{color: 'greenyellow'}}>You are like it</span> :
+                                    <span className={c.text} style={{color: 'red'}}>You are do not like it</span>
+                                }
+                            </td>
+                            <td>
+                                <button className={c.deleteButton} onClick={() => {
+                                    dispatch(deleteFromVote([f.id, setErrorMessage]))
+                                }}>Delete
+                                </button>
+                            </td>
+                        </tr>
+                    )}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     )
 }
 
