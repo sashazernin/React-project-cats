@@ -23,7 +23,7 @@ const Vote = () => {
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
-    }, [favoriteData])
+    }, [favoriteData,dispatch])
     const vote = async (value) => {
         if (!voteInProcess) {
             dispatch(setImage({'url': null, 'id': null}))
@@ -33,18 +33,16 @@ const Vote = () => {
                 'sub_id': SubscriberName,
                 value
             }, setErrorMessage]))
-            setVoteInProcess(false)
             clear()
             setFavoriteId(null)
             dispatch(getAllVotes([SubscriberName, setErrorMessage]))
+            setVoteInProcess(false)
         }
     }
-
     const favoriteId = useSelector(state => state.vote.favoriteId)
     const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
             dispatch(setFavoriteId(id))
-        }
-    )
+    })
     return (
         <div className={c.body}>
             <h1 className={c.title}>Vote</h1>
@@ -55,11 +53,11 @@ const Vote = () => {
                 <div className={c.imageField}>
                     {!catImage ? <Preloader/> :
                         <>
-                            <img className={c.catImage} src={catImage}/>
+                            <img className={c.catImage} src={catImage} alt={'Cat'}/>
                             <button className={c.favButton} onClick={() => {
                                 switchFavorite()
                             }}>
-                                <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
+                                <img className={c.favImage} src={!favoriteId ? heart : heartActive} alt={''}/>
                             </button>
                         </>
                     }

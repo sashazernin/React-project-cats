@@ -81,7 +81,6 @@
 
 @media (any-hover: hover) {
     .favButton:hover {
-        cursor: pointer;
         background: rgba(255, 255, 255, 0.4);
     }
 }

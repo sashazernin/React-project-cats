@@ -14,21 +14,12 @@ const VotesList = () => {
     const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [errorMessage, setErrorMessage] = useState()
     useInitialize(!votes, true, getAllVotes, [SubscriberName, setErrorMessage])
-    if (!votes) {
-        return (
-            <Preloader/>
-        )
-    }
-    if (Object.entries(votes).length === 0) {
-        return (
-            <NullMessage message={'No Votes'}/>
-        )
-    }
+    if (!votes) {return (<Preloader/>)}
+    if (Object.entries(votes).length === 0) {return (<NullMessage message={'No Votes'}/>)}
     return (
         <div className={c.body}>
             <h1 className={c.title}>Votes</h1>
             <div className={c.container}>
-
                 <MessagePopup type={'error'} message={errorMessage} clear={() => {
                     setErrorMessage(null)
                 }}/>
@@ -49,7 +40,7 @@ const VotesList = () => {
                     {[...votes].reverse().map(f =>
                         <tr key={f.id} className={c.item}>
                             <td>
-                                <img className={c.itemImage} src={f.image.url}/>
+                                <img className={c.itemImage} src={f.image.url} alt={'Cat'}/>
                             </td>
                             <td style={{textAlign: 'center', width: '500px'}}>
                                 {f.value === 1 ?

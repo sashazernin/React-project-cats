@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import c from './FindImage.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {
@@ -11,11 +11,11 @@ import {
 import Preloader from "../common/Preloader/Preloader";
 import {useInitialize} from "../../features/hooks/useInitialize";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
-import {useSwitchFavorite} from "../../features/hooks/useSwitchFavorite";
-import {useCheckFavorite} from "../../features/hooks/useCheckFavorite";
-import {deleteFromFavorite} from "../../features/slices/FavoritesSlice";
 import NullMessage from "../common/NullMessage/NullMessage";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
+import ImageWithCheckFavorite from "../common/ImageWithCheckFavorite/ImageWithCheckFavorite";
+import {usePopupWithFavorite} from "../../features/hooks/usePopupWithFavorite";
+import {useChangeLoadedPage} from "../../features/hooks/useChangeLoadedPage";
 
 const FindImage = () => {
     const dispatch = useDispatch()
@@ -24,72 +24,26 @@ const FindImage = () => {
     const breedsList = useSelector(state => state.findImage.breedsList)
     const categoriesList = useSelector(state => state.findImage.categoriesList)
     const requestData = useSelector(state => state.findImage.requestData)
-    const pageRef = useRef()
     const [errorMessage, setErrorMessage] = useState()
+    const [popupOpened, setPopupOpened] = useState(false)
     useInitialize(!breedsList, true, getBreedsList, setErrorMessage)
     useInitialize(!categoriesList, true, getCategoriesList, setErrorMessage)
     useInitialize(!allImages, true, setRequestData, {'name': 'userId', 'value': SubscriberName})
-    const [popupOpened, setPopupOpened] = useState(false)
-    const [popupData, setPopupData] = useState({
-        'favoriteId': null,
-        'imageId': null,
-        'imageUrl': null,
-        'isFavorite': false,
-        'setFavoriteData': null
-    })
-    const [switchFavorite] = useSwitchFavorite(
-        popupData.imageId,
-        popupData.favoriteId,
-        popupData.isFavorite,
-        setErrorMessage,
-        (id) => {
-            popupData.setFavoriteData({'isFavorite': !popupData.isFavorite, 'favoriteId': id})
-        }
-    )
-
-    function openPopup(favoriteId, imageId, imageUrl, isFavorite, setFavoriteData) {
-        setPopupData({favoriteId, imageId, imageUrl, isFavorite, setFavoriteData})
-        setPopupOpened(true)
-    }
-
-    function closePopup(isFavorite) {
-        setPopupOpened(false)
-        const switchFavoriteFunction = async () => {
-            await switchFavorite()
-            if (!isFavorite) {
-                dispatch(deleteFromFavorite(popupData.favoriteId))
-            }
-        }
-
-        if (isFavorite !== popupData.isFavorite) {
-            switchFavoriteFunction()
-        }
-    }
-
     useEffect(() => {
         if (!requestData.isLoading && !!requestData.userId && requestData.page !== requestData.lastPage) {
             dispatch(setRequestData({'name': 'lastPage', 'value': requestData.page}))
             dispatch(getImages([requestData, setErrorMessage]))
         }
-    }, [requestData.page, requestData.breed_id, requestData.category, requestData.type, requestData.userId])
-
+    }, [requestData,dispatch])
+    const [popupData, openPopup, closePopup] = usePopupWithFavorite(setPopupOpened, setErrorMessage)
     const switchImage = (e) => {
         dispatch(setImages(null))
         dispatch(setRequestData({'name': e.target.name, 'value': e.target.value}))
     }
-    window.onscroll = function () {
-        if (pageRef.current.getBoundingClientRect().bottom <= window.innerHeight + 500
-            && !requestData.isLoading
-            && !requestData.allPagesLoad
-        ) {
-            dispatch(setRequestData({'name': 'page', 'value': requestData.page + 1}))
-        }
-    }
-    if (!breedsList || !categoriesList) {
-        return (
-            <Preloader/>
-        )
-    }
+    const [pageRef] = useChangeLoadedPage(requestData, () => {
+        dispatch(setRequestData({'name': 'page', 'value': requestData.page + 1}))
+    })
+    if (!breedsList || !categoriesList) {return (<Preloader/>)}
     return (
         <div className={c.body}>
             <h1 className={c.title}>Find image</h1>
@@ -98,12 +52,9 @@ const FindImage = () => {
                     setErrorMessage(null)
                 }}/>
                 <ImagePopup
-                    isFavorite={popupData.isFavorite}
+                    popupData={popupData}
                     isOpened={popupOpened}
                     close={closePopup}
-                    favoriteId={popupData.favoriteId}
-                    imageId={popupData.imageId}
-                    imageUrl={popupData.imageUrl}
                 />
                 <div className={c.selectorsContainer}>
                     <div className={c.selectorBody}>
@@ -144,9 +95,10 @@ const FindImage = () => {
                 {!allImages ? (!requestData.allPagesLoad ? <Preloader/> : <NullMessage message={'no Images'}/>) :
                     <div className={c.bodyItems}>
                         {allImages.map(f =>
-                            <Image key={f.id} openPopup={openPopup} condition={popupOpened} isFavorite={false}
-                                   favoriteId={null} imageId={f.id}
-                                   imageUrl={f.url}
+                            <ImageWithCheckFavorite key={f.id} openPopup={openPopup} condition={popupOpened}
+                                                    isFavorite={false}
+                                                    favoriteId={null} imageId={f.id}
+                                                    imageUrl={f.url}
                             />
                         )}
                         <div className={c.item}>
@@ -161,29 +113,6 @@ const FindImage = () => {
                 }
                 {!!allImages && requestData.isLoading && !requestData.allPagesLoad && <Preloader/>}
             </div>
-        </div>
-    )
-}
-
-const Image = (props) => {
-    const [favoriteData, , setFavoriteData] = useCheckFavorite(props.imageId)
-    return (
-        <div className={c.item}>
-            <div className={c.favoriteButtonContainer}>
-                <button className={c.favoriteButton}
-                        onClick={() => {
-                            props.openPopup(
-                                !!favoriteData.favoriteId && favoriteData.favoriteId,
-                                props.imageId,
-                                props.imageUrl,
-                                favoriteData.isFavorite,
-                                setFavoriteData
-                            )
-                        }}
-                >
-                </button>
-            </div>
-            <img className={c.favoriteImage} src={props.imageUrl}/>
         </div>
     )
 }

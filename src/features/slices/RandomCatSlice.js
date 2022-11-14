@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getRandomCatImage} from "../Api";
+import {imagesAPI} from "../Api";
 
 const initialState = {
     image_id: null,
@@ -10,7 +10,7 @@ const initialState = {
 export const getRandomCat = createAsyncThunk('randomCat/getRandomCat',
     async ([setErrorMessage], {dispatch}) => {
         try {
-            const resp = await getRandomCatImage()
+            const resp = await imagesAPI.getRandomCatImage()
             dispatch(setCat(resp.data['0']))
         } catch (error) {
             setErrorMessage(error.message)

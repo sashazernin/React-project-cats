@@ -19,11 +19,6 @@ export const voteApi = {
     }
 }
 
-export const getRandomCatImage = () => {
-    console.warn('use the imagesAPI.getRandomCatImage()')
-    return imagesAPI.getRandomCatImage()
-}
-
 export const favoriteApi = {
     createAFavorite(data) {
         return instance.post('favourites', data)
@@ -33,13 +28,6 @@ export const favoriteApi = {
     },
     getAllFavorites(userId) {
         return instance.get(`favourites?sub_id=${userId}`)
-    }
-}
-
-export const breedsApi = {
-    getBreedsList() {
-        console.warn('use the listApi.getBreedsList()')
-        return instance.get('breeds')
     }
 }
 

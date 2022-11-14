@@ -38,7 +38,7 @@ export const getImages = createAsyncThunk('findImage/getImages',
 export const getBreedsList = createAsyncThunk('findImage/getBreedsList',
     async (setErrorMessage, {dispatch}) => {
         try {
-            const resp = await breedsApi.getBreedsList()
+            const resp = await listApi.getBreedsList()
             dispatch(setBreedsList(resp.data))
         } catch (error) {
             setErrorMessage(error.message)

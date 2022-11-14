@@ -17,7 +17,7 @@ const MessagePopup = (props) => {
     return (
         <div className={c.body} style={{opacity: visible ? 1 : 0,}}>
             <div className={c.container}
-                 style={{background: props.type === 'error' && 'red' || props.type === 'success' && '#17bb17',}} >
+                 style={{background: props.type === 'error' ? 'red' : props.type === 'success' && '#17bb17'}} >
                 <span className={c.message} >{props.message}</span>
             </div>
         </div>

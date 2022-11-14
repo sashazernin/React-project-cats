@@ -18,13 +18,12 @@ const RandomCat = () => {
     useInitialize(!catImage, true, getRandomCat, [setErrorMessage])
     const favoriteId = useSelector(state => state.randomCat.favoriteId)
     const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
-            dispatch(setFavoriteId(id))
-        }
-    )
+        dispatch(setFavoriteId(id))
+    })
     const [favoriteData, clear] = useCheckFavorite(imageId)
     useEffect(() => {
         dispatch(setFavoriteId(favoriteData.favoriteId))
-    }, [favoriteData])
+    }, [favoriteData,dispatch])
     return (
         <div className={c.body}>
             <h1 className={c.title}>Random cat</h1>
@@ -35,11 +34,11 @@ const RandomCat = () => {
                 <div className={c.imageField}>
                     {!catImage ? <Preloader/> :
                         <>
-                            <img className={c.catImage} src={catImage}/>
+                            <img className={c.catImage} src={catImage} alt={'Cat'}/>
                             <button className={c.favButton} onClick={() => {
                                 switchFavorite()
                             }}>
-                                <img className={c.favImage} src={!favoriteId ? heart : heartActive}/>
+                                <img className={c.favImage} src={!favoriteId ? heart : heartActive} alt={''}/>
                             </button>
                         </>
                     }

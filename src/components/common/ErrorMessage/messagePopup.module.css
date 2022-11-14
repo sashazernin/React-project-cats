@@ -7,8 +7,8 @@
     bottom: 10px;
     display: flex;
     position: fixed;
-    justify-content: start;
-    align-items: end;
+    justify-content: flex-start;
+    align-items: flex-end;
     transition: 0.5s;
 }
 .container{

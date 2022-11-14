@@ -29,12 +29,9 @@ const Header = () => {
     const subscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const [menuOpened, setMenuOpened] = useState(false)
     const [inputError, setInputError] = useState('')
-    const switchMenuOpened = () => {
-        setMenuOpened(!menuOpened)
-    }
+    const switchMenuOpened = () => {setMenuOpened(!menuOpened)}
     const [menuRef] = useOutsideClick(menuOpened, switchMenuOpened)
     const setNewSubscriberName = (e) => {
-
         if (e.target.value.length <= 20 && e.target.value !== subscriberName
             && !(e.target.value.length === 0 && subscriberName === 'publicSubscriber')) {
 
@@ -73,9 +70,11 @@ const Header = () => {
         <header className={c.header}>
             <div className={c.headerBackground}></div>
             <div className={c.fixedContent}>
-                <NavLink to={'RandomCat'}>
+                <NavLink to={'About'}>
                     <img className={c.logo}
-                         src='https://cdn131.picsart.com/276546134009211.png?to=crop&type=webp&r=1456x1456&q=85'/>
+                         src='https://cdn131.picsart.com/276546134009211.png?to=crop&type=webp&r=1456x1456&q=85'
+                         alt={''}
+                    />
                 </NavLink>
                 <div className={c.containerHeaderInput}>
                     <div>
