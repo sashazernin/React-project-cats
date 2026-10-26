@@ -1,11 +1,14 @@
 import React from "react";
 import c from './About.module.css'
+import layout from '../../styles/pageLayout.module.css'
 
 const About = () => {
     return (
-        <div className={c.body}>
+        <div className={`${layout.page} ${layout.pageScroll} ${c.body}`}>
+            <div className={layout.pageHead}>
+                <h1 className={layout.pageTitle}>About</h1>
+            </div>
             <div className={c.container}>
-                <h1>About</h1>
                 <span>This project created by Zernin Alexander. my email <a
                     href='https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to=sashazernin1@gmail.com'>
                     sashazernin1@gmail.com

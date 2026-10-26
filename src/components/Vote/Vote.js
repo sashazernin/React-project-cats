@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import c from './Vote.module.css'
+import fav from '../../styles/favoriteButton.module.css'
 import {getRandomCat, createVote, setFavoriteId, getAllVotes} from "../../features/slices/VoteSlice";
 import heart from "../../images/Heart.png"
 import heartActive from "../../images/HeartActive.png";
@@ -11,6 +12,8 @@ import {useEffect} from "react";
 import Preloader from "../common/Preloader/Preloader";
 import {setImage} from "../../features/slices/VoteSlice";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
+import {ThumbDownIcon, ThumbUpIcon} from "./VoteIcons";
+import layout from "../../styles/pageLayout.module.css";
 
 const Vote = () => {
     const dispatch = useDispatch()
@@ -35,17 +38,19 @@ const Vote = () => {
             }, setErrorMessage]))
             clear()
             setFavoriteId(null)
-            dispatch(getAllVotes([SubscriberName, setErrorMessage]))
+            dispatch(getAllVotes([SubscriberName, 0, setErrorMessage]))
             setVoteInProcess(false)
         }
     }
     const favoriteId = useSelector(state => state.vote.favoriteId)
-    const [switchFavorite] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
+    const [switchFavorite, favPop] = useSwitchFavorite(imageId, favoriteId, !!favoriteId, setErrorMessage, (id) => {
             dispatch(setFavoriteId(id))
     })
     return (
-        <div className={c.body}>
-            <h1 className={c.title}>Vote</h1>
+        <div className={`${layout.page} ${c.body}`}>
+            <div className={layout.pageHead}>
+                <h1 className={layout.pageTitle}>Vote</h1>
+            </div>
             <div className={c.container}>
                 <MessagePopup type={'error'} message={errorMessage} clear={() => {
                     setErrorMessage(null)
@@ -54,22 +59,41 @@ const Vote = () => {
                     {!catImage ? <Preloader/> :
                         <>
                             <img className={c.catImage} src={catImage} alt={'Cat'}/>
-                            <button className={c.favButton} onClick={() => {
+                            <button
+                                type="button"
+                                className={`${fav.favBtn} ${fav.favBtnOverlay} ${favoriteId ? fav.favBtnActive : ''} ${favPop ? fav.favBtnPop : ''}`}
+                                onClick={() => {
                                 switchFavorite()
-                            }}>
-                                <img className={c.favImage} src={!favoriteId ? heart : heartActive} alt={''}/>
+                            }}
+                                aria-label={favoriteId ? 'Remove from favorites' : 'Add to favorites'}
+                            >
+                                <img className={fav.favIcon} src={!favoriteId ? heart : heartActive} alt={''}/>
                             </button>
                         </>
                     }
                 </div>
-                <div>
-                    <button className={c.likeItButton} onClick={() => {
+                <div className={c.buttonRow}>
+                    <button
+                        type="button"
+                        className={c.likeItButton}
+                        disabled={voteInProcess}
+                        aria-label="I like it"
+                        onClick={() => {
                         vote(1).then()
-                    }}>I like it
+                    }}
+                    >
+                        <ThumbUpIcon className={c.voteIcon} aria-hidden="true"/>
                     </button>
-                    <button className={c.dontLikeItButton} onClick={() => {
+                    <button
+                        type="button"
+                        className={c.dontLikeItButton}
+                        disabled={voteInProcess}
+                        aria-label="I don't like it"
+                        onClick={() => {
                         vote(0).then()
-                    }}>I don't like it
+                    }}
+                    >
+                        <ThumbDownIcon className={c.voteIcon} aria-hidden="true"/>
                     </button>
                 </div>
             </div>

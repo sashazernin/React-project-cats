@@ -1,25 +1,29 @@
-.body{
-    padding: 0 20px;
-}
-.title{
-    margin-left: 5%;
+.body {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
 }
 .container {
     display: flex;
     align-items: center;
     flex-direction: column;
+    width: 100%;
 }
 
 .imageField {
     position: relative;
-    width: 80% ;
-    min-height: 65vh;
-    height: 65vh;
+    width: var(--content-media-width);
+    max-width: 100%;
+    height: clamp(220px, calc(100dvh - var(--random-cat-chrome) - 3rem), 58vh);
+    min-height: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background: black;
+    background: #0a0a0a;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
 }
 
 .catImage {
@@ -28,44 +32,101 @@
     max-height: 100%;
 }
 
-.likeItButton {
-    background: #079a2b;
-    padding: 15px 30px;
-    margin: 10px 20px;
-    border-radius: 10px;
+.buttonRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    padding: 0 var(--space-sm);
+}
+
+.voteIcon {
+    width: 1.65rem;
+    height: 1.65rem;
+    flex-shrink: 0;
+    display: block;
+}
+
+.likeItButton,
+.dontLikeItButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 64px;
+    height: 52px;
+    padding: 0;
     color: #ffffff;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.25s ease,
+        filter 0.2s ease;
+}
+
+.likeItButton {
+    background: linear-gradient(
+        160deg,
+        #22c55e 0%,
+        var(--color-success) 45%,
+        var(--color-success-active) 100%
+    );
+    box-shadow:
+        0 4px 18px rgba(34, 197, 94, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        var(--shadow-sm);
+}
+
+.dontLikeItButton {
+    background: linear-gradient(
+        160deg,
+        #f43f5e 0%,
+        var(--color-danger) 45%,
+        var(--color-danger-active) 100%
+    );
+    box-shadow:
+        0 4px 18px rgba(244, 63, 94, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        var(--shadow-sm);
 }
 
 @media (any-hover: hover) {
     .likeItButton:hover {
-        background: #058123;
+        transform: translateY(-2px);
+        filter: brightness(1.06);
+        box-shadow:
+            0 8px 26px rgba(34, 197, 94, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            var(--shadow-md);
     }
-}
 
-.likeItButton:active {
-    background: #03671f;
-}
-
-.dontLikeItButton {
-    background: #cc0b0b;
-    padding: 15px 30px;
-    margin: 10px 20px;
-    border-radius: 10px;
-    color: #ffffff;
-}
-
-@media (any-hover: hover) {
     .dontLikeItButton:hover {
-        background: #ab0909;
+        transform: translateY(-2px);
+        filter: brightness(1.06);
+        box-shadow:
+            0 8px 26px rgba(244, 63, 94, 0.45),
+            inset 0 1px 0 rgba(255, 255, 255, 0.25),
+            var(--shadow-md);
     }
 }
 
+.likeItButton:active,
 .dontLikeItButton:active {
-    background: #940707;
+    transform: translateY(0);
+    filter: brightness(0.96);
+}
+
+.likeItButton:disabled,
+.dontLikeItButton:disabled {
+    opacity: 0.6;
+    transform: none;
+    cursor: not-allowed;
 }
 
 @media (max-height: 600px) {
-
     .cat {
         min-height: 55vh;
         height: 55vh;
@@ -78,50 +139,9 @@
         height: 45vh;
     }
 
-    .dontLikeItButton {
-        padding: 10px 15px;
-        margin: 10px 10px;
-    }
-
+    .dontLikeItButton,
     .likeItButton {
-        padding: 10px 15px;
-        margin: 10px 10px;
+        padding: 12px 18px;
     }
 }
 
-@media (max-width: 400px) {
-    .dontLikeItButton {
-        padding: 10px 15px;
-        margin: 10px 10px;
-    }
-
-    .likeItButton {
-        padding: 10px 15px;
-        margin: 10px 10px;
-    }
-}
-
-.favButton {
-    display: flex;
-    padding: 0;
-    border: none;
-    background: rgba(0, 0, 0, 0);
-    right: 6px;
-    bottom: 6px;
-    position: absolute;
-}
-.favImage {
-    padding: 5px;
-    width: 30px;
-}
-@media (any-hover: hover) {
-    .favImage:hover {
-        cursor: pointer;
-        background: rgba(255, 255, 255, 0.4);
-    }
-}
-
-.favImage:active {
-    pointer-events: none;
-    width: 33px;
-}

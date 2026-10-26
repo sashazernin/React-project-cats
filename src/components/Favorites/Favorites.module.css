@@ -1,24 +1,23 @@
-.body{
-    padding: 0 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.body {
+    overflow: hidden;
 }
-.title{
-    margin-left: 5%;
+
+.scrollArea {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: var(--space-xs);
+    scrollbar-gutter: stable;
+    -webkit-overflow-scrolling: touch;
 }
+
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
+    padding: 0 var(--space-xs) var(--space-md);
 }
-.item{
+
+.item {
     position: relative;
-    border: none;
-    margin: 5px;
-    height: 200px;
-    width: 200px;
 }
 .favoriteImage{
     object-fit: cover;
@@ -53,15 +52,82 @@
         background: rgba(0, 0, 0, 0.4);
     }
 }
-@media (max-width: 800px){
-    .item{
-        height: 150px;
-        width: 150px;
+@media (max-width: 768px) {
+    .pagination {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-sm);
+    }
+
+    .paginationSide {
+        display: none;
+    }
+
+    .paginationSideEnd {
+        flex: 1 1 100%;
+        justify-content: center;
     }
 }
-@media (max-width: 400px){
-    .item{
-        height: 100px;
-        width: 100px;
+
+.pagination {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+}
+
+.paginationSide,
+.paginationSideEnd {
+    flex: 1;
+    min-width: 0;
+}
+
+.paginationSideEnd {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.paginationNav {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+}
+
+.pageButton {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: rgba(124, 58, 237, 0.35);
+    border: 1px solid rgba(192, 132, 252, 0.4);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition), opacity var(--transition);
+}
+
+.pageButton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+@media (any-hover: hover) {
+    .pageButton:not(:disabled):hover {
+        background: rgba(124, 58, 237, 0.55);
     }
+}
+
+.pageInfo {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #e9d5ff;
+    min-width: 5.5rem;
+    text-align: center;
+}
+
+.pageLoader {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl);
 }

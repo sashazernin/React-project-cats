@@ -1,22 +1,94 @@
-.appBody{
+.appBody {
   display: flex;
   justify-content: center;
-  min-height: 100vh;
-  height: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: var(--space-md) var(--space-sm);
+  box-sizing: border-box;
+  overflow: hidden;
 }
-.appContainer{
-  width: 1200px;
-  background: rgba(44, 44, 44, 0.8);
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  width: var(--layout-shell-width);
+  max-width: 100%;
+  height: calc(100dvh - 2 * var(--space-md));
+  max-height: calc(100dvh - 2 * var(--space-md));
+  background: rgba(36, 28, 52, 0.92);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
-.appContent{
-  display: grid;
-  grid-template-areas:
-  "h"
-  "c"
-  "c";
+
+.appContainerInit {
+  overflow: hidden;
+}
+
+.appContent {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.appMain {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.appMain > * {
+  flex: 1;
+  min-height: 0;
   width: 100%;
 }
-h1,h2,h3,h4,h5,h6{
-  color: white;
-  font-weight: bold;
+
+.appMainLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .appBody {
+    padding: 0;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  .appContainer {
+    width: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .appContainer {
+    border-radius: 0;
+  }
 }

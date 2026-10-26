@@ -33,21 +33,21 @@ function App() {
         if (subscriberName === null) {
             checkAndSetSubscriberName()
         } else {
-            dispatch(getFavorites([subscriberName, setErrorMessage]))
+            dispatch(getFavorites([subscriberName, 0, setErrorMessage]))
         }
     }
     useInitialize([!subscriberName, !favorites], false, initializeApp)
     return (
         <HashRouter>
             <div className={'appBody'}>
-                <div className='appContainer'>
+                <div className={!favorites ? 'appContainer appContainerInit' : 'appContainer'}>
                     <div className='appContent'>
                         <MessagePopup type={'error'} message={errorMessage} clear={() => {
                             setErrorMessage(null)
                         }}/>
-                        {!favorites ? <Preloader/> :
-                            <>
-                                <Header/>
+                        <Header/>
+                        <div className={!favorites ? 'appMain appMainLoading' : 'appMain'}>
+                            {!favorites ? <Preloader/> :
                                 <Routes>
                                     <Route path='About' element={<About/>}/>
                                     <Route path='FindImage' element={<FindImage/>}/>
@@ -58,8 +58,8 @@ function App() {
                                     <Route path='Votes' element={<VotesList/>}/>
                                     <Route path='Vote' element={<Vote/>}/>
                                 </Routes>
-                            </>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

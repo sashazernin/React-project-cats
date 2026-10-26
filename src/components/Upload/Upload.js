@@ -1,53 +1,71 @@
-import React, {useState,useEffect} from "react";
+import React, {useState} from "react";
 import c from './Upload.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../common/Preloader/Preloader";
 import ImagePopup from "../common/ImagePopup/ImagePopup";
+import catalog from "../../styles/catalogGrid.module.css";
 import NullMessage from "../common/NullMessage/NullMessage";
 import {useInitialize} from "../../features/hooks/useInitialize";
-import {deleteUploadImage, getImages, setRequestInfo, uploadImage} from "../../features/slices/UploadSlice";
+import {deleteUploadImage, getImages, setImages, setRequestInfo} from "../../features/slices/UploadSlice";
 import MessagePopup from "../common/ErrorMessage/messagePopup";
 import ImageWithCheckFavorite from "../common/ImageWithCheckFavorite/ImageWithCheckFavorite";
 import {usePopupWithFavorite} from "../../features/hooks/usePopupWithFavorite";
-import {useChangeLoadedPage} from "../../features/hooks/useChangeLoadedPage";
+import UploadCatButton from "../common/UploadCatButton/UploadCatButton";
+import layout from "../../styles/pageLayout.module.css";
+import PageSizeSelect from "../common/PageSizeSelect/PageSizeSelect";
+import ConfirmDialog from "../common/ConfirmDialog/ConfirmDialog";
 
 const Upload = () => {
     const dispatch = useDispatch()
     const allUploadImages = useSelector(state => state.upload.allUploadImages)
     const SubscriberName = useSelector(state => state.Subscriber.SubscriberName)
     const requestInfo = useSelector(state => state.upload.requestInfo)
-    const imageIsLoading = useSelector(state => state.upload.imageIsLoading)
     const [errorMessage, setErrorMessage] = useState()
     const [successMessage, setSuccessMessage] = useState()
     const [popupOpened, setPopupOpened] = useState()
-    useInitialize(!allUploadImages, true, setRequestInfo, {'name': 'userId', 'value': SubscriberName})
-    useEffect(() => {
-        if (!requestInfo.isLoading && !!requestInfo.userId && requestInfo.page !== requestInfo.lastPage) {
-            dispatch(setRequestInfo({'name': 'lastPage', 'value': requestInfo.page}))
-            dispatch(getImages([requestInfo, setErrorMessage]))
-        }
-    }, [requestInfo,dispatch])
-    const [pageRef] = useChangeLoadedPage(requestInfo,()=>{
-        dispatch(setRequestInfo({'name': 'page', 'value': requestInfo.page + 1}))
-    })
-    const [popupData,openPopup,closePopup] = usePopupWithFavorite(setPopupOpened,setErrorMessage)
-    if (!allUploadImages) {return (<Preloader/>)}
-    const onUploadImage = async (e) => {
-        if (e.target.files.length) {
-            if (e.target.files[0].size <= 262144) {
-                await dispatch(uploadImage([{
-                    'file': e.target.files[0],
-                    'sub_id': SubscriberName
-                }, setErrorMessage, setSuccessMessage]))
-            } else {
-                if (e.target.files[0].type !== 'image/jpeg') {
-                    setErrorMessage('Your image is too big. Max size is 250kb. Try to convert your image to jpg')
-                } else {
-                    setErrorMessage('Your image is too big. Max size is 250kb')
-                }
+    const [pageLoading, setPageLoading] = useState(false)
+    const [deleteConfirmId, setDeleteConfirmId] = useState(null)
 
-            }
+    useInitialize(!requestInfo.userId, true, setRequestInfo, {name: 'userId', value: SubscriberName})
+    useInitialize(
+        allUploadImages === null && !!requestInfo.userId,
+        true,
+        getImages,
+        [0, setErrorMessage]
+    )
+
+    const [popupData, openPopup, closePopup] = usePopupWithFavorite(setPopupOpened, setErrorMessage)
+
+    const fetchPage = (page) => {
+        if (page < 0 || pageLoading || requestInfo.isLoading) {
+            return
         }
+        if (page > requestInfo.page && !requestInfo.hasMore) {
+            return
+        }
+        setPageLoading(true)
+        dispatch(getImages([page, setErrorMessage]))
+            .finally(() => setPageLoading(false))
+    }
+
+    const changePageSize = (size) => {
+        if (pageLoading || size === requestInfo.pageSize) {
+            return
+        }
+        dispatch(setImages(null))
+        dispatch(setRequestInfo({name: 'pageSize', value: size}))
+        setPageLoading(true)
+        dispatch(getImages([0, setErrorMessage]))
+            .finally(() => setPageLoading(false))
+    }
+
+    const onUploadSuccess = (msg) => {
+        setSuccessMessage(msg)
+        setPageLoading(false)
+    }
+
+    if (!allUploadImages && !requestInfo.userId) {
+        return (<Preloader/>)
     }
 
     const deleteImage = (imageId) => {
@@ -55,63 +73,102 @@ const Upload = () => {
         setPopupOpened(false)
     }
 
-    return (
-        <div ref={pageRef} className={c.body}>
-            <h1 className={c.title}>Upload</h1>
-            <div className={c.container}>
-                <MessagePopup type={'error'} message={errorMessage} clear={() => {
-                    setErrorMessage(null)
-                }}/>
-                <MessagePopup type={'success'} message={successMessage} clear={() => {
-                    setSuccessMessage(null)
-                }}/>
-                <ImagePopup
-                    popupData = {popupData}
-                    isOpened={popupOpened}
-                    close={closePopup}
-                    buttons={[{
-                        'name': 'delete Image',
-                        'onClickFunction': deleteImage,
-                        'functionData': popupData.imageId
-                    }]}
-                />
-                <div className={c.fileUploadBody}>
-                    <label className={c.fileUploadContainer}>
-                        <span className={c.fileUploadText}>Upload a cat</span>
-                        <input type={"file"} onChange={onUploadImage} accept="image/*" className={c.fileUploadInput}/>
-                        {imageIsLoading &&
-                            <>
-                                <div className={c.preloader}>
-                                    <Preloader/>
-                                </div>
-                            </>
-                        }
-                    </label>
-                </div>
+    const imageRows = Array.isArray(allUploadImages) ? allUploadImages : []
+    const showEmpty = allUploadImages !== null && !pageLoading && !requestInfo.isLoading && imageRows.length === 0
 
-                {Object.entries(allUploadImages).length === 0 ? <NullMessage message={'No uploaded images'}/> :
-                    <div className={c.bodyItems}>
-                        {allUploadImages.map(f =>
-                            <ImageWithCheckFavorite key={f.id} openPopup={openPopup} condition={popupOpened} isFavorite={false}
-                                   favoriteId={null} imageId={f.id}
-                                   imageUrl={f.url}
+    return (
+        <div className={`${layout.page} ${layout.pageFill} ${c.body}`}>
+            <div className={layout.pageHead}>
+                <div className={layout.titleRow}>
+                    <h1 className={layout.pageTitle}>Upload</h1>
+                    <UploadCatButton
+                        compact
+                        className={c.titleUpload}
+                        onError={setErrorMessage}
+                        onSuccess={onUploadSuccess}
+                    />
+                </div>
+            </div>
+            <MessagePopup type={'error'} message={errorMessage} clear={() => {
+                setErrorMessage(null)
+            }}/>
+            <MessagePopup type={'success'} message={successMessage} clear={() => {
+                setSuccessMessage(null)
+            }}/>
+            <ImagePopup
+                popupData={popupData}
+                isOpened={popupOpened}
+                close={closePopup}
+            />
+            <ConfirmDialog
+                isOpen={deleteConfirmId != null}
+                title="Delete this image?"
+                message="It will be removed from your uploads."
+                confirmLabel="Delete"
+                cancelLabel="Cancel"
+                onCancel={() => setDeleteConfirmId(null)}
+                onConfirm={() => {
+                    deleteImage(deleteConfirmId)
+                    setDeleteConfirmId(null)
+                }}
+            />
+            <div className={c.scrollArea}>
+                {allUploadImages === null || pageLoading ? (
+                    <div className={c.pageLoader}>
+                        <Preloader/>
+                    </div>
+                ) : showEmpty ? (
+                    <NullMessage message={'No uploaded images'}/>
+                ) : (
+                    <div className={`${catalog.grid} ${c.bodyItems}`}>
+                        {imageRows.map(f =>
+                            <ImageWithCheckFavorite
+                                key={f.id}
+                                openPopup={openPopup}
+                                condition={popupOpened}
+                                isFavorite={false}
+                                favoriteId={null}
+                                imageId={f.id}
+                                imageUrl={f.url}
+                                onRequestDelete={setDeleteConfirmId}
                             />
                         )}
-                        <div className={c.item}>
-                        </div>
-                        <div className={c.item}>
-                        </div>
-                        <div className={c.item}>
-                        </div>
-                        <div className={c.item}>
-                        </div>
                     </div>
-                }
-                {requestInfo.isLoading && <Preloader/>}
+                )}
             </div>
+            {allUploadImages !== null && !showEmpty && (
+                <nav className={c.pagination} aria-label="Upload pagination">
+                    <div className={c.paginationSide} aria-hidden="true"/>
+                    <div className={c.paginationNav}>
+                        <button
+                            type="button"
+                            className={c.pageButton}
+                            disabled={pageLoading || requestInfo.page <= 0}
+                            onClick={() => fetchPage(requestInfo.page - 1)}
+                        >
+                            Previous
+                        </button>
+                        <span className={c.pageInfo}>Page {requestInfo.page + 1}</span>
+                        <button
+                            type="button"
+                            className={c.pageButton}
+                            disabled={pageLoading || !requestInfo.hasMore}
+                            onClick={() => fetchPage(requestInfo.page + 1)}
+                        >
+                            Next
+                        </button>
+                    </div>
+                    <div className={c.paginationSideEnd}>
+                        <PageSizeSelect
+                            value={requestInfo.pageSize}
+                            disabled={pageLoading}
+                            onChange={changePageSize}
+                        />
+                    </div>
+                </nav>
+            )}
         </div>
     )
 }
-
 
 export default Upload

@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {NavLink} from "react-router-dom";
 import {useOutsideClick} from "../../features/hooks/useOutsideClick";
 import {useSelector} from "react-redux";
+import OutlinedInput from "../common/OutlinedInput/OutlinedInput";
 
 const Link = (props) => {
     const isActive = ({isActive}) => (isActive ? c.activeLink : c.link)
@@ -40,7 +41,6 @@ const Header = () => {
             } else {
                 localStorage.setItem('subscriberName', e.target.value)
             }
-            console.log('qwe')
             window.location.reload()
         } else {
             e.target.value = e.target.defaultValue
@@ -77,31 +77,32 @@ const Header = () => {
                     />
                 </NavLink>
                 <div className={c.containerHeaderInput}>
-                    <div>
-                        <input className={c.headerInput} placeholder={'Subscriber name'}
-                               defaultValue={subscriberName !== 'publicSubscriber' ? subscriberName : null}
-                               onChange={onInputChange}
-                               onBlur={setNewSubscriberName}
-                               onKeyDown={unFocusInput}
-                        />
-                    </div>
-                    <div className={c.errorMessageContainer}>
-                        <span
-                            className={c.errorMessage}>{(!inputError && subscriberName === 'publicSubscriber') ? 'U\'re using a public name' : inputError}</span>
-                    </div>
+                    <OutlinedInput
+                        label="User name"
+                        fieldClassName={c.userNameField}
+                        aria-label="User name"
+                        defaultValue={subscriberName !== 'publicSubscriber' ? subscriberName : ''}
+                        onChange={onInputChange}
+                        onBlur={setNewSubscriberName}
+                        onKeyDown={unFocusInput}
+                    />
+                    <p className={c.subscriberHint} role="status">
+                        {(!inputError && subscriberName === 'publicSubscriber')
+                            ? 'You\'re using a public name'
+                            : inputError}
+                    </p>
                 </div>
 
             </div>
 
+            <nav className={c.content}>
+                <LicksCount/>
+            </nav>
             <div ref={menuRef} className={c.menuIcon} onClick={switchMenuOpened}>
                 <div className={c.menuIconBurger}>
                     <span></span>
                 </div>
-
             </div>
-            <nav className={c.content}>
-                <LicksCount/>
-            </nav>
             <nav style={{visibility: menuOpened ? 'visible' : 'hidden'}} className={c.contentMini}>
                 <LicksCount/>
             </nav>

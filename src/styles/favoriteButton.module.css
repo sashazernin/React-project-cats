@@ -1,0 +1,51 @@
+.favBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  padding: 6px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  transition: transform 0.2s ease;
+}
+
+.favBtnOverlay {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
+}
+
+.favBtn:hover {
+  transform: scale(1.06);
+}
+
+.favBtn:hover .favIcon {
+  animation: heart-wiggle 0.5s ease;
+}
+
+.favBtn:active {
+  transform: scale(0.95) translateY(0);
+}
+
+.favBtnPop .favIcon {
+  animation: heart-pop-click 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.favBtnActive .favIcon {
+  filter: drop-shadow(0 0 10px rgba(255, 105, 150, 0.9));
+}
+
+.favIcon {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
+  transition: filter 0.2s ease;
+}

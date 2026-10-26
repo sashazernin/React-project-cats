@@ -1,0 +1,51 @@
+.page {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: var(--page-padding-y) var(--page-padding-x);
+}
+
+.pageFill {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+.pageScroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pageHead {
+    flex-shrink: 0;
+    margin: 0 0 var(--space-md);
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pageTitle {
+    margin: 0;
+    text-align: left;
+    line-height: 1.15;
+    width: 100%;
+    max-width: 100%;
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.titleRow .pageTitle {
+    flex: 1;
+    min-width: 0;
+}

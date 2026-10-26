@@ -13,95 +13,310 @@
 .cancelPopup{
     border: none;
     position: absolute;
-    background: rgba(255, 255, 255, 0);
-    width: 30px;
-    height: 30px;
-    top: 20px;
-    right: 20px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    top: 16px;
+    right: 16px;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+.cancelPopup:after,
+.cancelPopup:before{
+    content: '';
+    position: absolute;
+    width: 1.125rem;
+    height: 2px;
+    background: white;
+    border-radius: 1px;
 }
 .cancelPopup:after{
-    content: '';
-    background: white;
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    left: 0;
     transform: rotate(45deg);
 }
 .cancelPopup:before{
-      content: '';
-      background: white;
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      left: 0;
-      transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 .container{
-    padding: 40px 20px 20px;
-    width: 60%;
-    height: 80%;
-    background: #3b3b3b;
+    display: flex;
+    flex-direction: column;
+    width: min(92vw, 56rem);
+    max-height: 90vh;
+    min-height: 0;
+    padding: 0;
+    background: var(--color-surface-elevated);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
 }
 .image{
+    display: block;
+    flex: 1 1 auto;
     width: 100%;
-    height: 90%;
+    min-height: 0;
+    max-height: 100%;
+    height: auto;
     object-fit: contain;
-    background: black;
+    object-position: top center;
+    background: #0a0a0a;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 .controlPanel{
-    height: 10%;
+    position: relative;
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 2.75rem;
+    padding: 6px var(--space-sm);
+    background: var(--color-surface);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
-.favButton {
-    padding: 0;
+
+.controlPanelFav{
+    padding: 2px;
+}
+
+.controlPanelFavIcon{
+    width: 28px;
+    height: 28px;
+}
+
+.panelActions{
+    position: absolute;
+    right: var(--space-sm);
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
-    border: none;
-    background: rgba(0, 0, 0, 0);
-}
-.favImage:active {
-    pointer-events: none;
-    width: 33px;
-}
-.favImage {
-    padding: 5px;
-    width: 30px;
+    align-items: center;
+    gap: var(--space-xs);
 }
 .imageDelete{
     font-weight: bold;
     background: black;
     color: white;
     width: 100%;
-    height: 90%;
+    min-height: 8rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
-.buttonMassive{
-    padding: 5px 10px;
-    margin-left: 10px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-family: Calibri;
-    color: white;
-    background: #5b5b5b;
+.actionBtn{
+    padding: 10px 22px;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 1px solid transparent;
+    transition:
+        color var(--transition),
+        background var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
 }
+
+.actionBtnNeutral{
+    color: var(--color-text);
+    background: var(--color-neutral-btn);
+    box-shadow: var(--shadow-sm);
+}
+
+.actionBtnOutline{
+    color: var(--color-accent);
+    background: transparent;
+    border-color: var(--color-accent-muted);
+    box-shadow: none;
+}
+
+.actionBtnDanger{
+    color: #fff;
+    background: var(--color-danger);
+    border-color: var(--color-danger);
+    box-shadow: none;
+}
+
+.actionBtnIcon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.125rem;
+    height: 2.125rem;
+    padding: 0;
+}
+
+.actionBtnDangerIcon{
+    color: var(--color-text-muted);
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    border-radius: 50%;
+}
+
+.trashIcon{
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.confirmLayer{
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    background: rgba(10, 6, 18, 0.72);
+    backdrop-filter: blur(4px);
+}
+
+.confirmCard{
+    width: min(100%, 22rem);
+    padding: 0;
+    border-radius: var(--radius-md);
+    background: var(--color-surface-elevated);
+    border: 1px solid rgba(192, 132, 252, 0.25);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+}
+
+.confirmHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+    border-bottom: 1px solid rgba(192, 132, 252, 0.28);
+}
+
+.confirmTitle{
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+    line-height: 1.3;
+}
+
+.confirmClose{
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.confirmClose:after,
+.confirmClose:before{
+    content: '';
+    position: absolute;
+    width: 0.875rem;
+    height: 2px;
+    background: var(--color-text-muted);
+    border-radius: 1px;
+    transition: background var(--transition);
+}
+
+.confirmClose:after{
+    transform: rotate(45deg);
+}
+
+.confirmClose:before{
+    transform: rotate(-45deg);
+}
+
+.confirmBody{
+    padding: var(--space-md) var(--space-md) var(--space-md);
+}
+
+.confirmMessage{
+    margin: 0;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: var(--color-text);
+    text-align: left;
+}
+
+.confirmFooter{
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-sm) var(--space-md);
+    border-top: 1px solid rgba(192, 132, 252, 0.28);
+}
+
+.confirmActions{
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+}
+
+.confirmFooter .actionBtn{
+    padding: 7px 14px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+}
+
 @media (any-hover) {
-    .favButton:hover{
-        background: rgba(0, 0, 0, 0.5);
-    }
     .cancelPopup:hover{
-        background: rgba(255, 255, 255, 0.26);
+        background: rgba(255, 255, 255, 0.22);
     }
-    .buttonMassive:hover{
-        background: #7a7a7a;
+    .confirmClose:hover{
+        background: rgba(168, 85, 247, 0.18);
+    }
+    .confirmClose:hover:after,
+    .confirmClose:hover:before{
+        background: var(--color-text);
+    }
+    .actionBtnNeutral:hover{
+        background: var(--color-neutral-btn-hover);
+    }
+    .actionBtnOutline:hover{
+        color: var(--color-text);
+        background: rgba(168, 85, 247, 0.12);
+        border-color: var(--color-accent);
+    }
+    .actionBtnDanger:hover{
+        background: var(--color-danger-hover);
+        border-color: var(--color-danger-hover);
+        filter: none;
+    }
+    .actionBtnDangerIcon:hover{
+        color: var(--color-danger);
+        border-color: transparent;
+        background: rgba(248, 113, 113, 0.22);
+        box-shadow: none;
+        filter: none;
     }
 }
 @media (max-width: 500px){
     .container{
-        height: 60%;
-        width: 80%;
+        width: min(96vw, 56rem);
+    }
+
+    .controlPanel {
+        padding: 5px var(--space-xs);
+    }
+
+    .panelActions {
+        right: var(--space-xs);
     }
 }

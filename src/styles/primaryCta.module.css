@@ -1,0 +1,39 @@
+.cta {
+  margin-top: var(--space-md);
+  padding: 16px 44px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #faf5ff;
+  background: linear-gradient(
+    135deg,
+    #7c3aed 0%,
+    var(--color-accent-muted) 45%,
+    #d8b4fe 100%
+  );
+  background-size: 160% 160%;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 4px 22px var(--color-accent-glow),
+    var(--shadow-sm);
+  transition:
+    background-position 0.35s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .cta:hover {
+    background-position: 100% 50%;
+    box-shadow:
+      0 8px 32px rgba(124, 58, 237, 0.55),
+      var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+.cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px var(--color-accent-glow);
+}

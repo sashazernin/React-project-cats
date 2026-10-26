@@ -1,10 +1,10 @@
 .bodyNullMessage{
-    padding-top: 40px;
+    padding: var(--space-xl) var(--page-padding-x);
     display: flex;
     justify-content: center;
 }
 .nullMessage{
-    font-size: 25px;
-    font-weight: bold;
-    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
 }
